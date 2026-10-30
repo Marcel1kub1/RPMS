@@ -9,4 +9,4 @@ if [ ! -x node_modules/.bin/next ]; then
   exit 1
 fi
 
-exec npm run start
+exec npm run prisma:generate && npm run start
