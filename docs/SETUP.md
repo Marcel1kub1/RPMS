@@ -24,6 +24,11 @@ If the host does not allow a build step, install dependencies with
 JavaScript and report `ERR_UNKNOWN_FILE_EXTENSION`. Do not use a generic Node template that
 launches `/home/container/src/index.js`; RPMS has no `src/index.js` entrypoint.
 
+If the host reports that local changes to `start.sh` would be overwritten by `git pull`, stop
+the server and delete the server's manually edited `start.sh` in the WispByte file manager.
+Restart once with automatic updates enabled so Git can restore the tracked file and download
+`start.cjs`. Do not edit tracked startup files in the server file manager afterward.
+
 Use the clone-and-start mode:
 
 ```bash
