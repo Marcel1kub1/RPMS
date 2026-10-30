@@ -68,9 +68,10 @@ DATABASE_URL=
 The application reads `MYSQL_*` first. Do not commit `.env`, passwords, connection strings, or
 database exports. Create the database and grant the user access before starting RPMS.
 
-The current source-only WispByte startup generates the Prisma client but does not apply schema
-migrations automatically. Run `npm exec prisma db push -- --accept-data-loss` once against a new
-RPMS database before the first start, then remove `--accept-data-loss` for later schema changes.
+The source-only WispByte startup applies the Prisma schema with `prisma db push` and generates the
+client before Next.js starts. It will stop instead of silently deleting data if Prisma detects a
+destructive schema change; review that change and run `npm exec prisma db push -- --accept-data-loss`
+manually only when you have a backup and approve the change.
 
 ## 4. Discord OAuth2
 

@@ -7,36 +7,28 @@ const environment = {
   PORT: process.env.PORT || '9050',
 };
 
-const generate = spawn(
-  npm,
-  ['run', 'prisma:generate'],
-  {
-    stdio: 'inherit',
-    env: environment,
-  },
-);
-
-generate.on('exit', (code, signal) => {
-  if (signal) {
-    process.kill(process.pid, signal);
-    return;
-  }
-
-  if (code !== 0) {
-    process.exit(code ?? 1);
-  }
-
-  const child = spawn(npm, ['run', 'start'], {
+function run(command, args, onSuccess) {
+  const child = spawn(command, args, {
     stdio: 'inherit',
     env: environment,
   });
 
-  child.on('exit', (childCode, childSignal) => {
-    if (childSignal) {
-      process.kill(process.pid, childSignal);
+  child.on('exit', (code, signal) => {
+    if (signal) {
+      process.kill(process.pid, signal);
       return;
     }
 
-    process.exit(childCode ?? 1);
+    if (code !== 0) {
+      process.exit(code ?? 1);
+    }
+
+    onSuccess();
+  });
+}
+
+run(npm, ['run', 'prisma:push'], () => {
+  run(npm, ['run', 'prisma:generate'], () => {
+    run(npm, ['run', 'start'], () => {});
   });
 });
