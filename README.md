@@ -72,7 +72,7 @@ pnpm dev
 
 If your hosting panel clones the repository and does not permit a build step, set the startup
 command to `if [ ! -x node_modules/.bin/next ]; then npm install --omit=dev --no-audit --no-fund --maxsockets=1; fi; sh start.sh` and do not use a panel template that launches `src/index.js`. It binds the web server to
-`0.0.0.0:9675` by default and uses the host-provided `PORT` when available:
+`0.0.0.0:9050` by default and uses the host-provided `PORT` when available:
 
 ```bash
 sh start.sh
@@ -82,7 +82,7 @@ This source-only mode uses `next dev`, because `next start` requires a generated
 production build. It is suitable for restricted hosting panels but is not equivalent to a
 production build: expect higher resource usage, disable development mode when possible, and
 put the app behind your host's HTTPS reverse proxy. Configure your subdomain to proxy to
-`127.0.0.1:9675` (or the host-provided port), and set `NEXTAUTH_URL`/`PUBLIC_URL` to the
+`127.0.0.1:9050` (or the host-provided port), and set `NEXTAUTH_URL`/`PUBLIC_URL` to the
 public HTTPS subdomain.
 
 To configure the environment interactively on the server, run:
@@ -116,7 +116,7 @@ includes:
 - `DISCORD_WEBHOOK_URL` and `DISCORD_WEBHOOK_ENABLED=true` to enable webhooks.
 
 For this deployment, use `https://rtmp.freesrv.com` as the public URL and proxy that subdomain
-to the host application port `9675`.
+to the host application port `9050`.
 
 Never commit `.env`, OAuth secrets, webhook URLs, database passwords, or private keys.
 

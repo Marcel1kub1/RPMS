@@ -30,8 +30,8 @@ sh setup-env.sh
 sh start.sh
 ```
 
-Set the hosting panel port to `9675`. The server binds to `0.0.0.0`, so the host can proxy
-`rtmp.freesrv.com` to port `9675`.
+Set the hosting panel port to `9050`. The server binds to `0.0.0.0`, so the host can proxy
+`rtmp.freesrv.com` to port `9050`.
 
 ## 2. Configure the public URL
 
@@ -40,11 +40,11 @@ Use these values in `.env`:
 ```env
 NEXTAUTH_URL=https://rtmp.freesrv.com
 PUBLIC_URL=https://rtmp.freesrv.com
-PORT=9675
+PORT=9050
 ```
 
 Set the DNS record for `rtmp.freesrv.com` according to your host's instructions. Your host must
-terminate HTTPS and reverse-proxy the subdomain to the RPMS process on port `9675`.
+terminate HTTPS and reverse-proxy the subdomain to the RPMS process on port `9050`.
 
 ## 3. MySQL configuration
 

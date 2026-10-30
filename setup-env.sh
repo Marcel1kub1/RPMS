@@ -56,7 +56,7 @@ MYSQL_PASSWORD=$mysql_password
 MYSQL_DATABASE=$mysql_database
 NEXTAUTH_URL=$public_url
 PUBLIC_URL=$public_url
-PORT=9675
+PORT=9050
 
 DISCORD_APPLICATION_ID=$discord_id
 DISCORD_SECRET=$discord_secret
