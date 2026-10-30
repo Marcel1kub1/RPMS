@@ -8,7 +8,7 @@
     "start": "next dev --webpack -H ${HOSTNAME:-0.0.0.0} -p ${PORT:-9050}",
     "typecheck": "tsc --noEmit",
     "prisma:generate": "prisma generate",
-    "prisma:push": "prisma db push --skip-generate",
+    "prisma:push": "prisma db push",
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",
     "lint": "oxlint .",
