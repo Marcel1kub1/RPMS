@@ -9,8 +9,4 @@ if [ ! -d node_modules ]; then
   exit 1
 fi
 
-if command -v pnpm >/dev/null 2>&1; then
-  exec pnpm run start
-fi
-
 exec npm run start
