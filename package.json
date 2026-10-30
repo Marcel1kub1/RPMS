@@ -104,7 +104,6 @@
   "overrides": {
     "qs": ">=6.14.1"
   },
-  "packageManager": "pnpm@11.22.0",
   "allowScripts": {
     "core-js@3.49.0": true,
     "noblox.js@7.3.1": true,

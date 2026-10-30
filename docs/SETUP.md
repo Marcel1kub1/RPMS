@@ -19,7 +19,7 @@ pnpm install
 ```
 
 If the host does not allow a build step, set the panel startup command to
-`if [ ! -d node_modules ]; then npm install --omit=dev --no-audit --no-fund --maxsockets=1; fi; sh start.sh`.
+`if [ ! -x node_modules/.bin/next ]; then npm install --omit=dev --no-audit --no-fund --maxsockets=1; fi; sh start.sh`.
 Do not use a generic Node template that launches `/home/container/src/index.js`; RPMS has no
 `src/index.js` entrypoint.
 
