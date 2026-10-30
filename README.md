@@ -104,6 +104,9 @@ includes:
 - Roblox OAuth credentials and callback URL.
 - `DISCORD_WEBHOOK_URL` and `DISCORD_WEBHOOK_ENABLED=true` to enable webhooks.
 
+For this deployment, use `https://rtmp.freesrv.com` as the public URL and proxy that subdomain
+to the host application port `9675`.
+
 Never commit `.env`, OAuth secrets, webhook URLs, database passwords, or private keys.
 
 ## Public legal pages
