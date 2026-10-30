@@ -18,7 +18,11 @@ corepack enable
 pnpm install
 ```
 
-If the host does not allow a build step, use the clone-and-start mode:
+If the host does not allow a build step, set the panel startup command to `sh start.sh`.
+Do not use a generic Node template that launches `/home/container/src/index.js`; RPMS has no
+`src/index.js` entrypoint.
+
+Use the clone-and-start mode:
 
 ```bash
 sh setup-env.sh

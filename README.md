@@ -70,8 +70,8 @@ pnpm dev
 
 ### Clone-and-start hosting panels
 
-If your hosting panel clones the repository and does not permit a build step, set the start file
-to `start.sh` (or the start command to `sh start.sh`). It binds the web server to
+If your hosting panel clones the repository and does not permit a build step, set the startup
+command to `sh start.sh` and do not use a panel template that launches `src/index.js`. It binds the web server to
 `0.0.0.0:9675` by default and uses the host-provided `PORT` when available:
 
 ```bash
