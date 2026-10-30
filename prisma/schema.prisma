@@ -125,8 +125,8 @@ model AuthSession {
   id        String   @id @unique @default(uuid()) @db.VarChar(36)
   userId    BigInt
   token     String   @unique
-  ipAddress String?
-  userAgent String?
+  ipAddress String?  @db.Text
+  userAgent String?  @db.Text
   browser   String?
   os        String?
   device    String?

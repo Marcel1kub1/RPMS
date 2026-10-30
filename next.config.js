@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  allowedDevOrigins: ['rtmp.freesrv.com'],
 
   experimental: {
     workerThreads: false,
