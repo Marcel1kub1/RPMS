@@ -1,277 +1,127 @@
 <div align="center">
-  <img height="90px" src=".github/logo.png" alt="RPMS Logo" /><br /><br />
-  <img src="https://img.shields.io/github/contributors/PlanetaryOrbit/orbit?style=for-the-badge&color=FF0099" />
-  <img src="https://img.shields.io/github/license/PlanetaryOrbit/orbit?style=for-the-badge&color=FF0099" />
-  <img src="https://img.shields.io/github/v/tag/PlanetaryOrbit/orbit?style=for-the-badge&color=FF0099" />
-  <img src="https://img.shields.io/github/forks/PlanetaryOrbit/orbit?style=for-the-badge&color=FF0099" />
-  <img src="https://img.shields.io/github/last-commit/PlanetaryOrbit/orbit?style=for-the-badge&color=FF0099" />
-  <a href="https://discord.gg/mWqdZmEkDc">
-    <img src="https://img.shields.io/discord/1348101138670682156?style=for-the-badge&logo=discord&logoColor=white&label=Discord&color=7289da" />
-  </a>
+  <img src=".github/rpms-logo.svg" alt="RPMS logo" width="180" />
 
-  <h1>RPMS</h1>
-  <p><strong>A modern, open-source staff management platform for Roblox groups</strong></p>
+  # RPMS
 
-<a href="https://planetaryapp.cloud">Website</a> ·
-<a href="https://docs.planetaryapp.cloud">Documentation</a> ·
-<a href="https://github.com/PlanetaryOrbit/orbit/issues">Report a Bug</a> ·
-<a href="https://github.com/PlanetaryOrbit/orbit/blob/main/CHANGELOG.md">Changelog</a> ·
-<a href="https://discord.com/invite/mWqdZmEkDc">Discord</a>
+  **Roblox Player Management System**
+
+  Open-source staff, session, moderation, and activity management for Roblox communities.
+
+  <p>
+    <a href="https://github.com/Marcel1kub1/RPMS/actions/workflows/build.yml"><img src="https://github.com/Marcel1kub1/RPMS/actions/workflows/build.yml/badge.svg" alt="Build status" /></a>
+    <a href="https://github.com/Marcel1kub1/RPMS/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Marcel1kub1/RPMS?style=flat-square&color=5865f2" alt="GPL v3 license" /></a>
+    <a href="https://github.com/Marcel1kub1/RPMS/stargazers"><img src="https://img.shields.io/github/stars/Marcel1kub1/RPMS?style=flat-square&color=f59e0b" alt="GitHub stars" /></a>
+    <a href="https://github.com/Marcel1kub1/RPMS/issues"><img src="https://img.shields.io/github/issues/Marcel1kub1/RPMS?style=flat-square&color=22c55e" alt="Open issues" /></a>
+  </p>
+
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#features">Features</a> ·
+  <a href="#configuration">Configuration</a> ·
+  <a href="#contributing">Contributing</a>
 </div>
 
-> [!NOTE]
-> RPMS is based on RPMS and is currently undergoing its MySQL/OAuth migration. Review all
-> legal templates before production use.
+## What is RPMS?
 
-## RPMS deployment notes
+RPMS gives Roblox group owners and staff teams one place to manage people, activity, sessions,
+moderation, documentation, and policies. It is designed to be self-hostable and lightweight,
+with a Docker profile suitable for a small one-vCPU server.
 
-RPMS uses MySQL 8, Discord OAuth2, Roblox OAuth, and an optional Discord Webhook integration.
-Copy `.env.example`, set provider credentials and a strong `SESSION_SECRET`, then run:
-
-```sh
-docker compose up --build -d
-```
-
-The compose profile is tuned for a small host (one vCPU and approximately 512 MB RAM). The
-application is limited to 384 MB and MySQL to 128 MB; use an external MySQL service for larger
-workloads. The public `/impressum`, `/privacy`, and `/terms` pages are templates and require
-operator-specific legal text.
-
----
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Planetary Cloud (Recommended)](#planetary-cloud-recommended)
-  - [One-Click Deploy to Vercel](#one-click-deploy-to-vercel)
-  - [Self-Hosting](#self-hosting)
-- [Screenshots](#screenshots)
-- [Tech Stack](#tech-stack)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
-## Overview
-
-RPMS is an open-source staff management platform for Roblox groups. It gives group owners and staff teams the tools they need to manage members, run sessions, enforce policies, and track activity, all from a single, intuitive interface.
-
----
+> RPMS is derived from the upstream Orbit project and remains licensed under GPLv3. See
+> [LICENSE](./LICENSE) and [NOTICE](./NOTICE) for attribution and redistribution requirements.
 
 ## Features
 
-RPMS ships with a comprehensive set of management tools out of the box:
+| Area | Included |
+| --- | --- |
+| **Staff management** | Roles, permissions, member administration, moderation history, and Roblox rank synchronization |
+| **Automatic sessions** | A session starts when any tracked player joins a Roblox server and is labeled `staff` or `non_staff` |
+| **Session reporting** | Activity duration, idle time, chat logs, server/job metadata, and reliable session closing |
+| **Discord integration** | Discord OAuth2 login plus optional webhook events for joins, leaves, shifts, chat logs, and moderation |
+| **Roblox integration** | Roblox OAuth login/linking and Roblox group activity integration |
+| **Privacy controls** | Privacy policy, Impressum and terms pages, plus an authenticated automatic data-deletion request endpoint |
+| **Operations** | MySQL 8, Prisma migrations, Docker deployment, audit logging, policies, documents, quotas, and notices |
 
-| Category               | Capabilities                                                                     |
-| ---------------------- | -------------------------------------------------------------------------------- |
-| **Member Management**  | Warn, promote, demote, and bulk-manage group members                             |
-| **Roles & Access**     | Create custom roles, invite users, or sync directly with your Roblox group       |
-| **Activity Tracking**  | Monitor member activity and enforce staff requirements                           |
-| **Inactivity Notices** | Automatically track and flag inactive members                                    |
-| **Integrations**       | Rank members via RPMS Integrations                                              |
-| **Communication**      | Message members directly within RPMS; post to the group wall with image support |
-| **Documentation**      | Host your group's docs natively inside RPMS                                     |
-| **Policies**           | Create and assign policy documents for members to review and sign                |
-| **Sessions**           | Schedule and host sessions with minimal overhead                                 |
+## Quick start
 
----
+### Docker
 
-## Getting Started
+```bash
+cp .env.example .env
+# Set SESSION_SECRET, OAuth credentials, and strong MySQL passwords in .env
+docker compose up --build -d
+```
 
-### Planetary Cloud (Recommended)
+Open `http://localhost:3000` after the container is healthy.
 
-The fastest and easiest way to run RPMS is through **Planetary Cloud**. It is free and hosts your instance for you, giving you peace of mind.
-> **[Get started at planetaryapp.cloud](https://planetaryapp.cloud)**
+The included compose profile is tuned for approximately **1 vCPU / 512 MB RAM / 8 GB storage**:
+the application is limited to 384 MB and MySQL to 128 MB. For larger communities, use an
+external MySQL service and increase the application resources.
 
----
+### Development
 
-### One-Click Deploy to Vercel
+```bash
+corepack enable
+pnpm install
+cp .env.example .env
+pnpm prisma generate
+pnpm dev
+```
 
-> [!DANGER]
-> Vercel is no longer supported after v2.1.11beta.21. The button below will only work with beta 21, it will not go further.
+Useful checks:
 
-Prefer to host on your own Vercel account? Deploy in seconds:
+```bash
+pnpm run lint
+pnpm run format:check
+pnpm run typecheck
+pnpm run build
+```
 
-<a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FPlanetaryOrbit%2Forbit%2Ftree%2Fv2.1.11beta21&env=SESSION_SECRET,DATABASE_URL,PUBLIC_URL&build-command=npx%20prisma%20db%20push%20%26%26%20npx%20prisma%20generate%20%26%26%20npx%20next%20build%20--webpack">
-  <img src="https://vercel.com/button" alt="Deploy with Vercel" />
-</a>
+## Configuration
 
-**Required environment variables:**
+The complete example is in [.env.example](./.env.example). Required production configuration
+includes:
 
-| Variable                       | Description                                                                                                                        |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `SESSION_SECRET`               | A strong secret string — generate with `openssl rand -base64 32`                                                                   |
-| `DATABASE_URL`                 | Your database connection string (e.g. [Supabase](https://supabase.com), [Railway](https://railway.app), [Neon](https://neon.tech)) |
-| `NEXTAUTH_URL` or `PUBLIC_URL` | Your deployment URL, without a trailing slash (e.g. `https://instance.planetaryapp.cloud`)                                         |
+- `SESSION_SECRET` — a long, random secret.
+- `DATABASE_URL` or the individual `DATABASE_*` values — MySQL 8 connection details.
+- Discord OAuth credentials and callback URL.
+- Roblox OAuth credentials and callback URL.
+- `DISCORD_WEBHOOK_URL` and `DISCORD_WEBHOOK_ENABLED=true` to enable webhooks.
 
----
+Never commit `.env`, OAuth secrets, webhook URLs, database passwords, or private keys.
 
-### Self-Hosting
+## Public legal pages
 
-For full self-hosting instructions, refer to the [official documentation](https://docs.planetaryapp.cloud).
+RPMS exposes:
 
-#### System Requirements
+- `/impressum`
+- `/privacy`
+- `/terms`
 
-RPMS is designed to run on a small Linux server, but we recommend giving it enough resources for Node.js, dependency installation, and Next.js builds.
+These are safe starting templates, not legal advice. Replace them with operator-specific,
+reviewed text before public deployment. Authenticated users can request deletion through
+`POST /api/privacy/delete-request`.
 
-| Resource     |                  Minimum |          Recommended |
-| ------------ | -----------------------: | -------------------: |
-| **CPU**      |                  2 cores |           2–4+ cores |
-| **RAM**      |                     2 GB |                4 GB+ |
-| **Storage**  |                    10 GB |           20 GB+ SSD |
-| **Database** | Any Prisma-compatible DB |           PostgreSQL |
-| **Node.js**  |                      20+ | Latest supported LTS |
-| **OS**       |                    Linux |                Linux |
+## Project widgets
 
-> [!WARNING]
-> You cannot use MongoDB, as MongoDB's database interface is NoSQL, and RPMS was programmed to be in SQL-like interface (such as PostgresSQL), and therefore is not compatible with MongoDB.
-
-> [!TIP]
-> **An SSD is strongly recommended.** RPMS's dependencies can consume a significant amount of disk space, particularly `node_modules`, and Next.js builds perform a considerable amount of disk I/O. We recommend having at least 20 GB of available storage for a comfortable installation.
-
-The minimum requirements are intended to represent the lowest practical configuration for running RPMS, not a recommended production environment. For production installations, we recommend **4 GB or more of RAM and SSD storage**.
-
----
-
-## Screenshots
-
-<table>
-  <tr>
-    <td width="50%" valign="middle" align="left">
-      <h3>🏠 Workspaces</h3>
-      <p>Your central hub for everything. Workspaces give each group its own isolated environment — manage members, configure settings, and access all tools from one clean dashboard.</p>
-    </td>
-    <td width="50%" valign="middle">
-      <img src="public/presentation/1.png" alt="Workspaces" width="100%" />
-    </td>
-  </tr>
-</table>
-
-<br />
-
-<table>
-  <tr>
-    <td width="50%" valign="middle">
-      <img src="public/presentation/2.png" alt="Permissions and Role Management" width="100%" />
-    </td>
-    <td width="50%" valign="middle" align="left">
-      <h3>🔐 Permissions & Role Management</h3>
-      <p>Create fully custom roles with granular permission controls. Invite individual users or sync roles directly with your Roblox group — keeping your hierarchy consistent across both platforms.</p>
-    </td>
-  </tr>
-</table>
-
-<br />
-
-<table>
-  <tr>
-    <td width="50%" valign="middle" align="left">
-      <h3>📅 Sessions</h3>
-      <p>Schedule, host, and log sessions without the usual overhead. Session hosts can announce and manage events directly in RPMS, keeping everything in one place and your staff informed.</p>
-    </td>
-    <td width="50%" valign="middle">
-      <img src="public/presentation/3.png" alt="Sessions" width="100%" />
-    </td>
-  </tr>
-</table>
-
-<br />
-
-<table>
-  <tr>
-    <td width="50%" valign="middle">
-      <img src="public/presentation/4.png" alt="Quota Management" width="100%" />
-    </td>
-    <td width="50%" valign="middle" align="left">
-      <h3>📊 Quota Management</h3>
-      <p>Assign activity quotas to staff roles and track progress in real time. Set weekly or monthly requirements and let RPMS handle the monitoring, so nothing slips through the cracks.</p>
-    </td>
-  </tr>
-</table>
-
-<br />
-
-<table>
-  <tr>
-    <td width="50%" valign="middle" align="left">
-      <h3>📄 Documents</h3>
-      <p>Host your group's documentation natively inside RPMS. Write, organise, and publish guides, handbooks, and policies — no external tool required.</p>
-    </td>
-    <td width="50%" valign="middle">
-      <img src="public/presentation/5.png" alt="Documents" width="100%" />
-    </td>
-  </tr>
-</table>
-
-<br />
-
-<table>
-  <tr>
-    <td width="50%" valign="middle">
-      <img src="public/presentation/6.png" alt="Staff Management" width="100%" />
-    </td>
-    <td width="50%" valign="middle" align="left">
-      <h3>👥 Staff Management</h3>
-      <p>Warn, promote, demote, and bulk-manage members with ease. Every action is logged, giving you a clear, auditable record of moderation history across your entire team.</p>
-    </td>
-  </tr>
-</table>
-
-<br />
-
-<table>
-  <tr>
-    <td width="50%" valign="middle" align="left">
-      <h3>🔔 Notices</h3>
-      <p>Let staff flag when they'll be away before it becomes a problem. Members submit inactivity notices directly in RPMS, and managers get a clear view of who's available and when.</p>
-    </td>
-    <td width="50%" valign="middle">
-      <img src="public/presentation/7.png" alt="Notices" width="100%" />
-    </td>
-  </tr>
-</table>
-
-<br />
-
-<table>
-  <tr>
-    <td width="50%" valign="middle">
-      <img src="public/presentation/8.png" alt="Activity Tracking" width="100%" />
-    </td>
-    <td width="50%" valign="middle" align="left">
-      <h3>📈 Activity Tracking</h3>
-      <p>Get a full picture of how your staff are performing. Track group activity over time, identify who's contributing, and make informed decisions about promotions and removals.</p>
-    </td>
-  </tr>
-</table>
-
----
-
-## Tech Stack
-
-RPMS is built with a modern, fully TypeScript stack:
-
-- **Frontend:** [Next.js](https://nextjs.org), [TailwindCSS](https://tailwindcss.com)
-- **Backend:** [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction), [Prisma ORM](https://www.prisma.io)
-- **Database:** Any Prisma-compatible database (PostgreSQL recommended)
-- **PNPM** is used as the package manager and build tool.
-
----
+<div align="center">
+  <a href="https://github.com/Marcel1kub1/RPMS/issues/new?template=bug_report.md">🐛 Report a bug</a> ·
+  <a href="https://github.com/Marcel1kub1/RPMS/issues/new?template=feature_request.md">✨ Request a feature</a> ·
+  <a href="https://github.com/Marcel1kub1/RPMS/discussions">💬 Discussions</a> ·
+  <a href="https://github.com/Marcel1kub1/RPMS/releases">📦 Releases</a>
+</div>
 
 ## Contributing
 
-View the [contribution guidelines](./CONTRIBUTING.md) for more information on how to contribute to RPMS. Failure to follow these guidelines may result in your pull request being rejected.
-
----
+Pull requests and focused issue reports are welcome. Read
+[CONTRIBUTING.md](./.github/CONTRIBUTING.md) before opening a change. Please do not include
+credentials, private player data, webhook URLs, or production database dumps.
 
 ## License
 
-RPMS is licensed under the [GNU General Public License v3.0](./LICENSE). You are free to use, modify, and distribute this software under the terms of that license.
-
----
+RPMS is distributed under the [GNU General Public License v3.0](./LICENSE). You may use,
+modify, and redistribute it under the license terms, including commercially, provided that
+the GPL obligations are met.
 
 <div align="center">
-  <sub>Built with ❤️ by <a href="https://planetaryapp.cloud">Team Planetary</a> and pawesome contributers. meow</sub>.
+  <sub>RPMS is an independent open-source project by Marcel Bender.</sub>
 </div>

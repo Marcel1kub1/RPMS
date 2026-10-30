@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" role="img" aria-labelledby="title desc">
+  <title id="title">RPMS logo</title>
+  <desc id="desc">A blue and violet shield with the letters RPMS</desc>
+  <defs>
+    <linearGradient id="gradient" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <path d="M120 18 204 48v62c0 55-34 91-84 112-50-21-84-57-84-112V48z" fill="url(#gradient)"/>
+  <path d="m120 47 54 19v44c0 35-20 61-54 78-34-17-54-43-54-78V66z" fill="#0f172a" fill-opacity=".72"/>
+  <path d="m91 103 20 20 39-42 12 12-51 55-32-32z" fill="#f8fafc"/>
+  <text x="238" y="126" fill="#0f172a" font-family="Inter,Segoe UI,sans-serif" font-size="82" font-weight="800" letter-spacing="8">RPMS</text>
+  <text x="244" y="166" fill="#64748b" font-family="Inter,Segoe UI,sans-serif" font-size="20" font-weight="600" letter-spacing="4">ROBLOX PLAYER MANAGEMENT SYSTEM</text>
+</svg>
