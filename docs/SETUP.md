@@ -18,10 +18,11 @@ corepack enable
 pnpm install
 ```
 
-If the host does not allow a build step, set the panel startup command to
-`if [ ! -x node_modules/.bin/next ]; then npm install --omit=dev --no-audit --no-fund --maxsockets=1; fi; sh start.sh`.
-Do not use a generic Node template that launches `/home/container/src/index.js`; RPMS has no
-`src/index.js` entrypoint.
+If the host does not allow a build step, install dependencies with
+`npm install --omit=dev --no-audit --no-fund --maxsockets=1`, then set the Node startup file to
+`start.cjs`. Do not set `start.sh` as a Node startup file: WispByte will try to parse it as
+JavaScript and report `ERR_UNKNOWN_FILE_EXTENSION`. Do not use a generic Node template that
+launches `/home/container/src/index.js`; RPMS has no `src/index.js` entrypoint.
 
 Use the clone-and-start mode:
 

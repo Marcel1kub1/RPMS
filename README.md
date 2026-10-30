@@ -70,8 +70,10 @@ pnpm dev
 
 ### Clone-and-start hosting panels
 
-If your hosting panel clones the repository and does not permit a build step, set the startup
-command to `if [ ! -x node_modules/.bin/next ]; then npm install --omit=dev --no-audit --no-fund --maxsockets=1; fi; sh start.sh` and do not use a panel template that launches `src/index.js`. It binds the web server to
+If your hosting panel clones the repository and does not permit a build step, install dependencies
+with `npm install --omit=dev --no-audit --no-fund --maxsockets=1`, then set the Node startup file
+to `start.cjs`. Do not set `start.sh` as a Node startup file: WispByte will try to parse it as
+JavaScript and report `ERR_UNKNOWN_FILE_EXTENSION`. `start.cjs` binds the web server to
 `0.0.0.0:9050` by default and uses the host-provided `PORT` when available:
 
 ```bash
