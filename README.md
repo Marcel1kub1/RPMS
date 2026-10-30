@@ -17,6 +17,7 @@
   <a href="#quick-start">Quick start</a> ·
   <a href="#features">Features</a> ·
   <a href="#configuration">Configuration</a> ·
+  <a href="./docs/SETUP.md">Full setup guide</a> ·
   <a href="#contributing">Contributing</a>
 </div>
 
@@ -118,6 +119,9 @@ For this deployment, use `https://rtmp.freesrv.com` as the public URL and proxy 
 to the host application port `9675`.
 
 Never commit `.env`, OAuth secrets, webhook URLs, database passwords, or private keys.
+
+For the complete Discord OAuth2, Roblox OAuth2, MySQL, domain, webhook, and security setup,
+read the [full configuration guide](./docs/SETUP.md).
 
 ## Public legal pages
 

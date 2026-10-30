@@ -49,7 +49,8 @@ export default async function handler(req: AuthenticatedRequest, res: NextApiRes
   authUrl.searchParams.set('client_id', clientId);
   authUrl.searchParams.set(
     'redirect_uri',
-    `${process.env.PLANETARY_CLOUD_URL ? `https://${process.env.PLANETARY_CLOUD_URL}` : process.env.NEXTAUTH_URL || process.env.PUBLIC_URL}/api/auth/discord/callback`,
+    process.env.DISCORD_REDIRECT_URI ||
+      `${process.env.PLANETARY_CLOUD_URL ? `https://${process.env.PLANETARY_CLOUD_URL}` : process.env.NEXTAUTH_URL || process.env.PUBLIC_URL}/api/auth/discord/callback`,
   );
   authUrl.searchParams.set('scope', 'identify');
   authUrl.searchParams.set('response_type', 'code');
