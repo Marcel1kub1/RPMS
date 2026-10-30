@@ -19,6 +19,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@headlessui/react": "^1.7.19",
     "@prisma/adapter-mariadb": "^7.9.1",
+    "@prisma/client": "^7.8.0",
     "@relatiohq/opencloud": "^1.10.2",
     "@tabler/icons-react": "^3.44.0",
     "@tailwindcss/forms": "^0.5.11",
@@ -82,7 +83,6 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "@prisma/client": "^7.8.0",
     "@types/node": "^20.19.43",
     "@types/pg": "^8.20.0",
     "@types/react": "^18.3.31",

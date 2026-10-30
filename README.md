@@ -71,7 +71,7 @@ pnpm dev
 ### Clone-and-start hosting panels
 
 If your hosting panel clones the repository and does not permit a build step, set the startup
-command to `sh start.sh` and do not use a panel template that launches `src/index.js`. It binds the web server to
+command to `if [ ! -d node_modules ]; then npm install --omit=dev --no-audit --no-fund --maxsockets=1; fi; sh start.sh` and do not use a panel template that launches `src/index.js`. It binds the web server to
 `0.0.0.0:9675` by default and uses the host-provided `PORT` when available:
 
 ```bash
