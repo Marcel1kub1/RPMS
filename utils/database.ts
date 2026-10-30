@@ -28,13 +28,18 @@ const databaseUrl = process.env.DATABASE_URL
   : null;
 
 const adapter = new PrismaMariaDb({
-  host: process.env.DATABASE_HOST || databaseUrl?.hostname || 'db',
-  port: Number(process.env.DATABASE_PORT || databaseUrl?.port || 3306),
-  user: process.env.DATABASE_USER || decodeURIComponent(databaseUrl?.username || 'rpms'),
+  host: process.env.MYSQL_HOST || process.env.DATABASE_HOST || databaseUrl?.hostname || 'db',
+  port: Number(process.env.MYSQL_PORT || process.env.DATABASE_PORT || databaseUrl?.port || 3306),
+  user:
+    process.env.MYSQL_USER ||
+    process.env.DATABASE_USER ||
+    decodeURIComponent(databaseUrl?.username || 'rpms'),
   password:
+    process.env.MYSQL_PASSWORD ||
     process.env.DATABASE_PASSWORD ||
     decodeURIComponent(databaseUrl?.password || ''),
   database:
+    process.env.MYSQL_DATABASE ||
     process.env.DATABASE_NAME ||
     databaseUrl?.pathname.replace(/^\/+/, '') ||
     'rpms',
