@@ -21,7 +21,8 @@ const nextConfig = {
   },
 
   env: {
-    NEXT_PUBLIC_DATABASE_CHECK: process.env.DATABASE_URL ? 'true' : '',
+    NEXT_PUBLIC_DATABASE_CHECK:
+      process.env.DATABASE_URL || process.env.MYSQL_HOST ? 'true' : '',
   },
 
   async headers() {

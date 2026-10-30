@@ -25,7 +25,7 @@ export default function DatabaseErrorPage() {
       <p className='text-zinc-700 dark:text-zinc-300'>
         Please set the{' '}
         <code className='font-mono bg-zinc-200 dark:bg-white/5 dark:border dark:border-white/10 px-1 py-0.5 rounded'>
-          DATABASE_URL
+          DATABASE_URL or MYSQL_HOST
         </code>{' '}
         environment variable in your deployment.
       </p>

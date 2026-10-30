@@ -112,7 +112,7 @@ The complete example is in [.env.example](./.env.example). Required production c
 includes:
 
 - `SESSION_SECRET` — a long, random secret.
-- `DATABASE_URL` or the individual `DATABASE_*` values — MySQL 8 connection details.
+- `DATABASE_URL` or the `MYSQL_*` variables — MySQL 8 connection details.
 - Discord OAuth credentials and callback URL.
 - Roblox OAuth credentials and callback URL.
 - `DISCORD_WEBHOOK_URL` and `DISCORD_WEBHOOK_ENABLED=true` to enable webhooks.

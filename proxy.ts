@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 
-const REQUIRED_ENV_VARS = ['DATABASE_URL', 'SESSION_SECRET'];
+const REQUIRED_ENV_VARS = ['SESSION_SECRET'];
 
 const PUBLIC_ROUTES = [
   '/welcome',
@@ -40,7 +40,15 @@ function internalUrl(request: NextRequest, path: string): string {
 }
 
 function getMissingEnvVars(): string[] {
-  return REQUIRED_ENV_VARS.filter((v) => !process.env[v]);
+  const missing = REQUIRED_ENV_VARS.filter((v) => !process.env[v]);
+  const hasDatabaseUrl = Boolean(process.env.DATABASE_URL);
+  const hasMysqlHost = Boolean(process.env.MYSQL_HOST);
+
+  if (!hasDatabaseUrl && !hasMysqlHost) {
+    missing.push('DATABASE_URL or MYSQL_HOST');
+  }
+
+  return missing;
 }
 
 let setupCache: {
