@@ -84,6 +84,16 @@ put the app behind your host's HTTPS reverse proxy. Configure your subdomain to 
 `127.0.0.1:9675` (or the host-provided port), and set `NEXTAUTH_URL`/`PUBLIC_URL` to the
 public HTTPS subdomain.
 
+To configure the environment interactively on the server, run:
+
+```bash
+sh setup-env.sh
+```
+
+The script masks secret input, writes `.env` with file mode `600`, and generates the OAuth
+callback URLs for `https://rtmp.freesrv.com`. Never paste production secrets into chat or commit
+the generated `.env` file.
+
 Useful checks:
 
 ```bash
