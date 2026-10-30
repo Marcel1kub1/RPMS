@@ -67,6 +67,23 @@ pnpm prisma generate
 pnpm dev
 ```
 
+### Clone-and-start hosting panels
+
+If your hosting panel clones the repository and does not permit a build step, set the start file
+to `start.sh` (or the start command to `sh start.sh`). It binds the web server to
+`0.0.0.0:9675` by default and uses the host-provided `PORT` when available:
+
+```bash
+sh start.sh
+```
+
+This source-only mode uses `next dev`, because `next start` requires a generated `.next`
+production build. It is suitable for restricted hosting panels but is not equivalent to a
+production build: expect higher resource usage, disable development mode when possible, and
+put the app behind your host's HTTPS reverse proxy. Configure your subdomain to proxy to
+`127.0.0.1:9675` (or the host-provided port), and set `NEXTAUTH_URL`/`PUBLIC_URL` to the
+public HTTPS subdomain.
+
 Useful checks:
 
 ```bash

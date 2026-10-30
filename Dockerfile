@@ -23,4 +23,4 @@ RUN --mount=type=cache,target=/usr/src/app/.next/cache \
 
 EXPOSE 3000
 
-CMD ["pnpm", "run", "start"]
+CMD ["pnpm", "exec", "next", "start", "-H", "0.0.0.0", "-p", "3000"]
