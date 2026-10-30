@@ -37,7 +37,7 @@ const workspace: LayoutProps = ({ children }) => {
   return (
     <div className='h-screen bg-zinc-50 dark:bg-zinc-950'>
       <Head>
-        <title>{workspace.groupName ? `Orbit - ${workspace.groupName}` : 'Loading...'}</title>
+        <title>{workspace.groupName ? `RPMS - ${workspace.groupName}` : 'Loading...'}</title>
         <link
           rel='icon'
           href={`${workspace.groupThumbnail}`}

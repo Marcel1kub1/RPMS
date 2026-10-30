@@ -97,7 +97,7 @@ function ConsoleBanner() {
       danger: ['font-size: 13px', 'font-weight: 800', 'color: #ff4d6d'].join(';'),
     };
 
-    console.info('%cOrbit %c— The All In One Staff Management Solution', styles.logo, styles.title);
+    console.info('%cRPMS %c— The All In One Staff Management Solution', styles.logo, styles.title);
 
     console.info('%c\n%s', styles.subtitle, 'Staff management, without the headache.');
 
@@ -117,7 +117,7 @@ function ConsoleBanner() {
   return null;
 }
 
-function Orbit({ Component, pageProps }: AppPropsWithLayout) {
+function RPMS({ Component, pageProps }: AppPropsWithLayout) {
   const [loading, setLoading] = useState(true);
   const [showLoader, setShowLoader] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -157,14 +157,14 @@ function Orbit({ Component, pageProps }: AppPropsWithLayout) {
         disableTransitionOnChange
       >
         <Head>
-          <title>Orbit</title>
+          <title>RPMS</title>
           <meta
             name='viewport'
             content='width=device-width, initial-scale=1, viewport-fit=cover'
           />
           <meta
             name='description'
-            content='Orbit — The all-in-one staff management solution.'
+            content='RPMS — The all-in-one staff management solution.'
           />
         </Head>
 
@@ -214,4 +214,4 @@ function Orbit({ Component, pageProps }: AppPropsWithLayout) {
   );
 }
 
-export default Orbit;
+export default RPMS;

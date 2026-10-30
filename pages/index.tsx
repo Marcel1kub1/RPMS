@@ -55,7 +55,7 @@ interface Workspaces {
   groupLogo: string;
 }
 
-const PINNED_WORKSPACE_KEY = 'orbit-pinned-workspace';
+const PINNED_WORKSPACE_KEY = 'rpms-pinned-workspace';
 
 const Home: NextPage = () => {
   const [login, setLogin] = useRecoilState(loginState);
@@ -521,10 +521,10 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Orbit - Workspaces</title>
+        <title>RPMS</title>
         <meta
           name='description'
-          content='Manage your Roblox workspaces with Orbit'
+          content='Roblox Player Management System'
         />
       </Head>
 
@@ -536,8 +536,8 @@ const Home: NextPage = () => {
         <Topbar />
         <WorkspacesPageShell>
           <WorkspacesPageHeader
-            title='Workspaces'
-            subtitle='Choose a workspace to continue, or create one to get started.'
+            title='RPMS'
+            subtitle='Manage Roblox activity, sessions, and staff operations.'
             action={
               <div className='flex flex-wrap items-center justify-end gap-2'>
                 {isOwner ? (
@@ -1366,7 +1366,7 @@ const Home: NextPage = () => {
                                 Hi {login.displayname}! 👋
                               </Dialog.Title>
                               <p className='text-zinc-500 dark:text-zinc-400 mt-1 text-xs'>
-                                Welcome to Orbit. Here's a quick look at what you can do.
+                                Welcome to RPMS. Here's a quick look at what you can do.
                               </p>
                             </div>
                             <div className='mt-4 space-y-1.5'>
@@ -1503,6 +1503,11 @@ const Home: NextPage = () => {
             </Dialog>
           </Transition>
         </WorkspacesPageShell>
+        <footer className='mx-auto flex max-w-7xl flex-wrap gap-4 px-6 py-6 text-sm text-zinc-500'>
+          <a href='/impressum' className='hover:underline'>Impressum</a>
+          <a href='/terms' className='hover:underline'>Terms of service</a>
+          <a href='/privacy' className='hover:underline'>Privacy policy</a>
+        </footer>
       </div>
     </div>
   );

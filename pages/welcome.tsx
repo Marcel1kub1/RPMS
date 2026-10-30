@@ -197,7 +197,7 @@ const Login: NextPage = () => {
     <div className={`min-h-screen bg-no-repeat bg-cover bg-center flex flex-col bg-orbit`}>
       <div className='hidden sm:block absolute top-4 left-4 pointer-events-none'>
         <p className='text-white sm:text-3xl md:text-5xl font-extrabold leading-tight'>
-          👋 Welcome <br /> to <span style={{ color: selectedColor }}>Orbit</span>
+          👋 Welcome <br /> to <span style={{ color: selectedColor }}>RPMS</span>
         </p>
       </div>
 
@@ -213,7 +213,7 @@ const Login: NextPage = () => {
                 Let&apos;s get started
               </p>
               <p className='mt-1 text-sm text-zinc-500 dark:text-zinc-400'>
-                To configure your Orbit instance, we&apos;ll need some information
+                To configure your RPMS instance, we&apos;ll need some information
               </p>
               <FormProvider {...methods}>
                 <form
@@ -385,7 +385,7 @@ const Login: NextPage = () => {
                   stroke={2}
                 />
                 <p className='text-xs leading-relaxed text-amber-700 dark:text-amber-300'>
-                  <b>Recommended:</b> An API key unlocks deeper Roblox group features in Orbit. You
+                  <b>Recommended:</b> An API key unlocks deeper Roblox group features in RPMS. You
                   can skip this and configure it later in Settings.
                 </p>
               </div>
@@ -421,11 +421,11 @@ const Login: NextPage = () => {
                   color={selectedColor}
                 />
                 <p className='text-2xl font-bold text-zinc-900 dark:text-white'>
-                  Make your Orbit account
+                  Make your RPMS account
                 </p>
 
                 <p className='mt-1 text-sm text-zinc-500 dark:text-zinc-400'>
-                  You need to create an Orbit account to continue
+                  You need to create an RPMS account to continue
                 </p>
 
                 <FormProvider {...signupform}>
@@ -539,7 +539,7 @@ const Login: NextPage = () => {
           </a>
         </div>
 
-        <p className='text-[11px] text-white/60'>Orbit v{packageinfo.version}</p>
+        <p className='text-[11px] text-white/60'>RPMS v{packageinfo.version}</p>
       </footer>
     </div>
   );

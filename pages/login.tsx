@@ -16,7 +16,6 @@ import axios from 'axios';
 import clsx from 'clsx';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import Router from 'next/router';
 import React, { useEffect, useState, useRef } from 'react';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
@@ -122,12 +121,10 @@ const Login: NextPage = () => {
   const [login, setLogin] = useRecoilState(loginState);
   const { isAvailable: isRobloxOAuth } = RobloxOAuthAvailable();
 
-  const { discord, google, oauthOnly, loading: oauthConfigLoading } = useOAuthConfig();
+  const { discord, oauthOnly, loading: oauthConfigLoading } = useOAuthConfig();
 
   const isDiscordOAuth = discord.available;
-  const isGoogleOAuth = google.available;
-
-  const isOAuthAvailable = isRobloxOAuth || isDiscordOAuth || isGoogleOAuth;
+  const isOAuthAvailable = isRobloxOAuth || isDiscordOAuth;
 
   const effectiveOAuthOnly = oauthOnly && isOAuthAvailable;
 
@@ -359,8 +356,8 @@ const Login: NextPage = () => {
     const { error, action, ...rest } = Router.query;
     if (error) {
       if (error === 'discord-not-linked')
-        toast.error("This account isn't linked to any Orbit account.");
-      else if (error === 'google-not-linked') toast.error('Your Google account is not linked.');
+        toast.error("This account isn't linked to any RPMS account.");
+      else if (error === 'google-not-linked') toast.error('Your external account is not linked.');
       else if (error === 'state-mismatch')
         toast.error('We detected a state mismatch, OAuth process was discontinued.');
       else if (error === 'missing_params') toast.error('Not enough params were provided.');
@@ -406,21 +403,6 @@ const Login: NextPage = () => {
           Continue with Discord
         </button>
       )}
-      {isGoogleOAuth && (
-        <button
-          type='button'
-          onClick={() => (window.location.href = '/api/auth/google/start')}
-          disabled={loading}
-          className={oauthButtonClass}
-        >
-          <img
-            src='/google.svg'
-            alt='Google'
-            className='h-5 w-5 dark:invert-0 invert'
-          />
-          Continue with Google
-        </button>
-      )}
     </div>
   );
 
@@ -438,7 +420,7 @@ const Login: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Sign in · Orbit</title>
+        <title>Sign in · RPMS</title>
       </Head>
 
       <div className='relative min-h-screen overflow-hidden bg-zinc-50 dark:bg-zinc-950'>
@@ -466,7 +448,7 @@ const Login: NextPage = () => {
           <div className='flex flex-col justify-center px-6 pb-4 pt-16 sm:px-10 lg:w-[42%] lg:px-16 lg:py-16 xl:w-[38%]'>
             <div className='max-w-md'>
               <h1 className='text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl'>
-                Welcome to <span className='text-primary'>Orbit</span>
+                Welcome to <span className='text-primary'>RPMS</span>
               </h1>
               <p className='mt-3 max-w-sm text-base leading-relaxed text-zinc-500 dark:text-zinc-400'>
                 Sign in or create an account to access your workspaces.
@@ -553,19 +535,12 @@ const Login: NextPage = () => {
                           </div>
                           <div className='mt-6 flex flex-col gap-5 border-t border-zinc-200/70 pt-5 dark:border-zinc-800/70 sm:flex-row sm:items-center sm:justify-between'>
                             <div className='flex flex-col gap-1.5'>
-                              <Link
-                                href='/forgot-password'
-                                className='w-fit text-sm font-medium text-primary transition-colors hover:text-primary/80'
-                              >
-                                Forgot password?
-                              </Link>
-
                               <button
                                 type='button'
                                 onClick={() => setMode('signup')}
                                 className='w-fit text-left text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                               >
-                                New to Orbit? Create an account
+                                New to RPMS? Create an account
                               </button>
                             </div>
 
@@ -578,7 +553,7 @@ const Login: NextPage = () => {
                             </AuthSubmitButton>
                           </div>
 
-                          {(isRobloxOAuth || isDiscordOAuth || isGoogleOAuth) &&
+                          {(isRobloxOAuth || isDiscordOAuth) &&
                             !effectiveOAuthOnly && (
                               <>
                                 {divider}
@@ -671,7 +646,7 @@ const Login: NextPage = () => {
                             </form>
                           </FormProvider>
                         )}
-                        {(isRobloxOAuth || isDiscordOAuth || isGoogleOAuth) && (
+                        {(isRobloxOAuth || isDiscordOAuth) && (
                           <>
                             {!effectiveOAuthOnly && divider}
                             <OAuthButtons />
@@ -814,7 +789,7 @@ const Login: NextPage = () => {
                               </AuthSubmitButton>
                             </div>
 
-                            {(isRobloxOAuth || isDiscordOAuth || isGoogleOAuth) && (
+                            {(isRobloxOAuth || isDiscordOAuth) && (
                               <>
                                 {divider}
                                 <OAuthButtons />

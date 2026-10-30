@@ -1,7 +1,7 @@
 # Changelog
 
 <!--
-All notable changes to Orbit are documented here. It is fetched by the backend.
+All notable changes to RPMS are documented here. It is fetched by the backend.
 -->
 
 # [2.2.3] - 2026-10-26
@@ -23,7 +23,7 @@ All notable changes to Orbit are documented here. It is fetched by the backend.
 - **Added** a searchable representative picker when creating alliances, including permission-based eligibility indicators. (Thanks @tiagoodevs)
 - **Added** a permission-protected API endpoint for searching alliance representatives. (Thanks @tiagoodevs)
 - **Added** a three-step progress indicator to the setup wizard.
-- **Added** documentation and GitHub links, along with the running Orbit version, to the setup page.
+- **Added** documentation and GitHub links, along with the running RPMS version, to the setup page.
 - **Added** support for customizing milestone messages.
 - **Added** a login tint customization option.
 - **Added** optimization improvements.

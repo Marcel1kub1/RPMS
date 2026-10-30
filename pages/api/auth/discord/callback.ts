@@ -90,7 +90,7 @@ export default async function handler(req: AuthenticatedRequest, res: NextApiRes
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'User-Agent': `orbit/${Package.version}`,
+          'User-Agent': `rpms/${Package.version}`,
         },
       },
     );
@@ -102,7 +102,7 @@ export default async function handler(req: AuthenticatedRequest, res: NextApiRes
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          'User-Agent': `orbit/${Package.version}`,
+          'User-Agent': `rpms/${Package.version}`,
         },
       },
     );

@@ -1,7 +1,7 @@
 {
-  "name": "Orbit Dashboard",
-  "short_name": "Orbit",
-  "description": "The ultimate Roblox management tool.",
+  "name": "RPMS Dashboard",
+  "short_name": "RPMS",
+  "description": "Roblox Player Management System.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",

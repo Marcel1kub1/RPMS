@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
 }
 
 model workspace {
@@ -105,10 +105,24 @@ model user {
   promotionRecommendationsReceived promotionRecommendation[] @relation("RecommendationTarget")
   promotionRecommendationsReviewed promotionRecommendation[] @relation("RecommendationReviewer")
   media                     media[]
+  deletionRequests          DataDeletionRequest[]
+}
+
+model DataDeletionRequest {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  userId      BigInt
+  status      String   @default("pending")
+  requestedAt DateTime @default(now())
+  processedAt DateTime?
+  reason      String?
+  user        user     @relation(fields: [userId], references: [userid], onDelete: Cascade)
+
+  @@index([status, requestedAt])
+  @@index([userId, status])
 }
 
 model AuthSession {
-  id        String   @id @unique @default(uuid()) @db.Uuid
+  id        String   @id @unique @default(uuid()) @db.VarChar(36)
   userId    BigInt
   token     String   @unique
   ipAddress String?
@@ -156,7 +170,7 @@ model VerificationState {
 }
 
 model pendingVerification {
-  token            String   @id @unique @default(uuid()) @db.Uuid
+  token            String   @id @unique @default(uuid()) @db.VarChar(36)
   userid           Int
   verificationCode String
   expiresAt        DateTime
@@ -194,8 +208,8 @@ model userInfo {
 }
 
 model QuotaRole {
-  quotaId String @db.Uuid
-  roleId  String @db.Uuid
+  quotaId String @db.VarChar(36)
+  roleId  String @db.VarChar(36)
   quota   Quota  @relation(fields: [quotaId], references: [id])
   role    role   @relation(fields: [roleId], references: [id])
 
@@ -203,8 +217,8 @@ model QuotaRole {
 }
 
 model role {
-  id               String        @id @unique @default(uuid()) @db.Uuid
-  permissions      String[]
+  id               String        @id @unique @default(uuid()) @db.VarChar(36)
+  permissions      Json
   isOwnerRole      Boolean?      @default(false)
   workspaceGroupId Int
   name             String
@@ -220,7 +234,7 @@ model role {
 }
 
 model RoleMember {
-  roleId        String   @db.Uuid
+  roleId        String   @db.VarChar(36)
   userId        BigInt
   manuallyAdded Boolean  @default(false)
   createdAt     DateTime @default(now())
@@ -231,7 +245,7 @@ model RoleMember {
 }
 
 model department {
-  id                String             @id @unique @default(uuid()) @db.Uuid
+  id                String             @id @unique @default(uuid()) @db.VarChar(36)
   name              String
   color             String?
   workspaceGroupId  Int
@@ -245,7 +259,7 @@ model department {
 }
 
 model DepartmentMember {
-  departmentId     String          @db.Uuid
+  departmentId     String          @db.VarChar(36)
   workspaceGroupId Int
   userId           BigInt
   department       department      @relation(fields: [departmentId], references: [id], onDelete: Cascade)
@@ -255,8 +269,8 @@ model DepartmentMember {
 }
 
 model QuotaDepartment {
-  quotaId      String     @db.Uuid
-  departmentId String     @db.Uuid
+  quotaId      String     @db.VarChar(36)
+  departmentId String     @db.VarChar(36)
   quota        Quota      @relation(fields: [quotaId], references: [id])
   department   department @relation(fields: [departmentId], references: [id])
 
@@ -264,7 +278,7 @@ model QuotaDepartment {
 }
 
 model QuotaUser {
-  quotaId String @db.Uuid
+  quotaId String @db.VarChar(36)
   userId  BigInt
   quota   Quota  @relation(fields: [quotaId], references: [id], onDelete: Cascade)
   user    user   @relation(fields: [userId], references: [userid], onDelete: Cascade)
@@ -279,7 +293,7 @@ model wallPost {
   updatedAt        DateTime  @updatedAt
   workspaceGroupId Int
   authorId         BigInt
-  mediaId          String?   @db.Uuid
+  mediaId          String?   @db.VarChar(36)
   author           user      @relation(fields: [authorId], references: [userid])
   workspace        workspace @relation(fields: [workspaceGroupId], references: [groupId])
   media            media?    @relation(fields: [mediaId], references: [id], onDelete: SetNull)
@@ -304,7 +318,7 @@ model AuditLog {
 }
 
 model SessionType {
-  id                 String       @id @unique @default(uuid()) @db.Uuid
+  id                 String       @id @unique @default(uuid()) @db.VarChar(36)
   name               String
   gameId             BigInt?
   allowUnscheduled   Boolean
@@ -320,18 +334,18 @@ model SessionType {
 }
 
 model schedule {
-  id            String      @id @unique @default(uuid()) @db.Uuid
+  id            String      @id @unique @default(uuid()) @db.VarChar(36)
   Days          Int[]
   Hour          Int
   Minute        Int
-  sessionTypeId String      @db.Uuid
+  sessionTypeId String      @db.VarChar(36)
   sessions      Session[]
   sessionType   SessionType @relation(fields: [sessionTypeId], references: [id])
 }
 
 model sessionUser {
   userid           BigInt
-  sessionid        String    @db.Uuid
+  sessionid        String    @db.VarChar(36)
   roleID           String
   slot             Int
   archived         Boolean?  @default(false)
@@ -344,14 +358,14 @@ model sessionUser {
 }
 
 model Session {
-  id                 String        @id @unique @default(uuid()) @db.Uuid
+  id                 String        @id @unique @default(uuid()) @db.VarChar(36)
   ownerId            BigInt?
   date               DateTime
   startedAt          DateTime?
   ended              DateTime?
   duration           Int           @default(30) // Duration in minutes
-  sessionTypeId      String        @db.Uuid
-  scheduleId         String?       @db.Uuid
+  sessionTypeId      String        @db.VarChar(36)
+  scheduleId         String?       @db.VarChar(36)
   name               String?
   type               String?
   archived           Boolean?      @default(false)
@@ -368,8 +382,8 @@ model Session {
 }
 
 model SessionNote {
-  id        String   @id @unique @default(uuid()) @db.Uuid
-  sessionId String   @db.Uuid
+  id        String   @id @unique @default(uuid()) @db.VarChar(36)
+  sessionId String   @db.VarChar(36)
   authorId  BigInt
   content   String
   createdAt DateTime @default(now())
@@ -379,8 +393,8 @@ model SessionNote {
 }
 
 model SessionLog {
-  id        String   @id @unique @default(uuid()) @db.Uuid
-  sessionId String   @db.Uuid
+  id        String   @id @unique @default(uuid()) @db.VarChar(36)
+  sessionId String   @db.VarChar(36)
   actorId   BigInt
   targetId  BigInt?
   action    String
@@ -392,7 +406,7 @@ model SessionLog {
 }
 
 model ActivitySession {
-  id               String    @id @unique @default(uuid()) @db.Uuid
+  id               String    @id @unique @default(uuid()) @db.VarChar(36)
   userId           BigInt
   active           Boolean
   startTime        DateTime
@@ -403,11 +417,17 @@ model ActivitySession {
   chatLog          Json?
   universeId       BigInt?
   sessionMessage   String?
+  isStaff          Boolean   @default(false)
+  serverJobId      String?
+  sessionSource    String    @default("roblox_server")
   archived         Boolean?  @default(false)
   archiveStartDate DateTime?
   archiveEndDate   DateTime?
   user             user      @relation(fields: [userId], references: [userid])
   workspace        workspace @relation(fields: [workspaceGroupId], references: [groupId])
+
+  @@index([workspaceGroupId, active])
+  @@index([userId, active])
 }
 
 model apiKey {
@@ -424,7 +444,7 @@ model apiKey {
 }
 
 model inactivityNotice {
-  id               String    @id @unique @default(uuid()) @db.Uuid
+  id               String    @id @unique @default(uuid()) @db.VarChar(36)
   userId           BigInt
   startTime        DateTime
   endTime          DateTime?
@@ -439,7 +459,7 @@ model inactivityNotice {
 }
 
 model staffResignation {
-  id               String    @id @unique @default(uuid()) @db.Uuid
+  id               String    @id @unique @default(uuid()) @db.VarChar(36)
   userId           BigInt
   workspaceGroupId Int
   lastWorkingDay   DateTime
@@ -459,14 +479,14 @@ model staffResignation {
 }
 
 model document {
-  id                     String                 @id @unique @default(uuid()) @db.Uuid
+  id                     String                 @id @unique @default(uuid()) @db.VarChar(36)
   name                   String
   content                Json
   createdAt              DateTime               @default(now())
   updatedAt              DateTime               @updatedAt
   ownerId                BigInt
   workspaceGroupId       Int
-  folderId               String?                @db.Uuid
+  folderId               String?                @db.VarChar(36)
   requiresAcknowledgment Boolean                @default(false)
   acknowledgmentDeadline DateTime?
   acknowledgmentMethod   String?                @default("signature")
@@ -485,11 +505,11 @@ model document {
 }
 
 model documentFolder {
-  id               String           @id @unique @default(uuid()) @db.Uuid
+  id               String           @id @unique @default(uuid()) @db.VarChar(36)
   name             String
   icon             String           @default("folder")
   workspaceGroupId Int
-  parentId         String?          @db.Uuid
+  parentId         String?          @db.VarChar(36)
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
   workspace        workspace        @relation(fields: [workspaceGroupId], references: [groupId], onDelete: Cascade)
@@ -502,7 +522,7 @@ model documentFolder {
 }
 
 model userBook {
-  id               String    @id @unique @default(uuid()) @db.Uuid
+  id               String    @id @unique @default(uuid()) @db.VarChar(36)
   userId           BigInt
   type             String
   reason           String
@@ -533,7 +553,7 @@ model rank {
 }
 
 model Quota {
-  id                String                  @id @default(uuid()) @db.Uuid
+  id                String                  @id @default(uuid()) @db.VarChar(36)
   type              String
   value             Int?
   workspaceGroupId  Int
@@ -548,8 +568,8 @@ model Quota {
 }
 
 model QuotaCustomCompletion {
-  id               String    @id @default(uuid()) @db.Uuid
-  quotaId          String    @db.Uuid
+  id               String    @id @default(uuid()) @db.VarChar(36)
+  quotaId          String    @db.VarChar(36)
   userId           BigInt
   status           String
   submittedAt      DateTime  @default(now())
@@ -568,21 +588,21 @@ model Ally {
   name                     String
   icon                     String
   groupId                  String
-  notes                    String[]
+  notes                    Json
   discordServer            String?
-  theirReps                String[]
+  theirReps                Json
   strikes                  Int         @default(0)
   terminationEffectiveDate DateTime?
   terminationReason        String?
-  id                       String      @id @unique @default(uuid()) @db.Uuid
+  id                       String      @id @unique @default(uuid()) @db.VarChar(36)
   workspace                workspace   @relation(fields: [workspaceGroupId], references: [groupId])
   allyVisits               allyVisit[]
   reps                     user[]      @relation("AllyTouser")
 }
 
 model allyVisit {
-  id           String   @id @unique @default(uuid()) @db.Uuid
-  allyId       String   @db.Uuid
+  id           String   @id @unique @default(uuid()) @db.VarChar(36)
+  allyId       String   @db.VarChar(36)
   hostId       BigInt
   time         DateTime
   name         String
@@ -614,7 +634,7 @@ model workspaceMember {
 }
 
 model ActivityAdjustment {
-  id               String    @id @default(uuid()) @db.Uuid
+  id               String    @id @default(uuid()) @db.VarChar(36)
   userId           BigInt
   actorId          BigInt
   workspaceGroupId Int
@@ -634,7 +654,7 @@ model ActivityAdjustment {
 }
 
 model ActivityHistory {
-  id               String    @id @default(uuid()) @db.Uuid
+  id               String    @id @default(uuid()) @db.VarChar(36)
   userId           BigInt
   workspaceGroupId Int
   periodStart      DateTime
@@ -657,7 +677,7 @@ model ActivityHistory {
 }
 
 model ActivityReset {
-  id                  String    @id @default(uuid()) @db.Uuid
+  id                  String    @id @default(uuid()) @db.VarChar(36)
   workspaceGroupId    Int
   resetById           BigInt?
   resetAt             DateTime  @default(now())
@@ -685,7 +705,7 @@ model workspaceExternalServices {
 }
 
 model SavedView {
-  id               String   @id @default(uuid()) @db.Uuid
+  id               String   @id @default(uuid()) @db.VarChar(36)
   workspaceGroupId Int
   name             String
   color            String?
@@ -700,9 +720,9 @@ model SavedView {
 }
 
 model PolicyAcknowledgment {
-  id             String   @id @default(uuid()) @db.Uuid
+  id             String   @id @default(uuid()) @db.VarChar(36)
   userId         BigInt
-  documentId     String   @db.Uuid
+  documentId     String   @db.VarChar(36)
   acknowledgedAt DateTime @default(now())
   ipAddress      String?
   signature      String? // Digital signature or acknowledgment text
@@ -716,8 +736,8 @@ model PolicyAcknowledgment {
 }
 
 model PolicyShareableLink {
-  id               String    @id @default(uuid()) @db.Uuid
-  documentId       String    @db.Uuid
+  id               String    @id @default(uuid()) @db.VarChar(36)
+  documentId       String    @db.VarChar(36)
   workspaceGroupId Int
   name             String // User-defined name for the link
   description      String? // Optional description
@@ -738,7 +758,7 @@ model PolicyShareableLink {
 }
 
 model promotionRecommendation {
-  id               String    @id @unique @default(uuid()) @db.Uuid
+  id               String    @id @unique @default(uuid()) @db.VarChar(36)
   workspaceGroupId Int
   recommenderId    BigInt
   targetId         BigInt
@@ -766,7 +786,7 @@ model promotionRecommendation {
 }
 
 model media {
-  id           String   @id @default(uuid()) @db.Uuid
+  id           String   @id @default(uuid()) @db.VarChar(36)
   filename     String   @unique
   originalName String
   mimeType     String

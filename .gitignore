@@ -38,6 +38,8 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+.env.*
+!.env.example
 
 # vercel
 .vercel
@@ -62,3 +64,7 @@ deploy.sh
 certificates
 .zed/
 data/media/
+
+# local Docker/MySQL data
+/mysql-data/
+/docker-data/

@@ -17,7 +17,7 @@ export default function Document() {
         />
         <meta
           name='apple-mobile-web-app-title'
-          content='Orbit'
+          content='RPMS'
         />
         <meta
           name='mobile-web-app-capable'

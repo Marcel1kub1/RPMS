@@ -1,5 +1,5 @@
 <div align="center">
-  <img height="90px" src=".github/logo.png" alt="Orbit Logo" /><br /><br />
+  <img height="90px" src=".github/logo.png" alt="RPMS Logo" /><br /><br />
   <img src="https://img.shields.io/github/contributors/PlanetaryOrbit/orbit?style=for-the-badge&color=FF0099" />
   <img src="https://img.shields.io/github/license/PlanetaryOrbit/orbit?style=for-the-badge&color=FF0099" />
   <img src="https://img.shields.io/github/v/tag/PlanetaryOrbit/orbit?style=for-the-badge&color=FF0099" />
@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/discord/1348101138670682156?style=for-the-badge&logo=discord&logoColor=white&label=Discord&color=7289da" />
   </a>
 
-  <h1>Orbit</h1>
+  <h1>RPMS</h1>
   <p><strong>A modern, open-source staff management platform for Roblox groups</strong></p>
 
 <a href="https://planetaryapp.cloud">Website</a> ·
@@ -20,7 +20,22 @@
 </div>
 
 > [!NOTE]
-> Orbit is currently in beta, so bugs and unfinished features are to be expected. Please submit all bug reports and suggestions through our [Feedback Portal](https://feedback.planetaryapp.cloud/).
+> RPMS is based on RPMS and is currently undergoing its MySQL/OAuth migration. Review all
+> legal templates before production use.
+
+## RPMS deployment notes
+
+RPMS uses MySQL 8, Discord OAuth2, Roblox OAuth, and an optional Discord Webhook integration.
+Copy `.env.example`, set provider credentials and a strong `SESSION_SECRET`, then run:
+
+```sh
+docker compose up --build -d
+```
+
+The compose profile is tuned for a small host (one vCPU and approximately 512 MB RAM). The
+application is limited to 384 MB and MySQL to 128 MB; use an external MySQL service for larger
+workloads. The public `/impressum`, `/privacy`, and `/terms` pages are templates and require
+operator-specific legal text.
 
 ---
 
@@ -41,13 +56,13 @@
 
 ## Overview
 
-Orbit is an open-source staff management platform for Roblox groups. It gives group owners and staff teams the tools they need to manage members, run sessions, enforce policies, and track activity, all from a single, intuitive interface.
+RPMS is an open-source staff management platform for Roblox groups. It gives group owners and staff teams the tools they need to manage members, run sessions, enforce policies, and track activity, all from a single, intuitive interface.
 
 ---
 
 ## Features
 
-Orbit ships with a comprehensive set of management tools out of the box:
+RPMS ships with a comprehensive set of management tools out of the box:
 
 | Category               | Capabilities                                                                     |
 | ---------------------- | -------------------------------------------------------------------------------- |
@@ -55,9 +70,9 @@ Orbit ships with a comprehensive set of management tools out of the box:
 | **Roles & Access**     | Create custom roles, invite users, or sync directly with your Roblox group       |
 | **Activity Tracking**  | Monitor member activity and enforce staff requirements                           |
 | **Inactivity Notices** | Automatically track and flag inactive members                                    |
-| **Integrations**       | Rank members via Orbit Integrations                                              |
-| **Communication**      | Message members directly within Orbit; post to the group wall with image support |
-| **Documentation**      | Host your group's docs natively inside Orbit                                     |
+| **Integrations**       | Rank members via RPMS Integrations                                              |
+| **Communication**      | Message members directly within RPMS; post to the group wall with image support |
+| **Documentation**      | Host your group's docs natively inside RPMS                                     |
 | **Policies**           | Create and assign policy documents for members to review and sign                |
 | **Sessions**           | Schedule and host sessions with minimal overhead                                 |
 
@@ -67,7 +82,7 @@ Orbit ships with a comprehensive set of management tools out of the box:
 
 ### Planetary Cloud (Recommended)
 
-The fastest and easiest way to run Orbit is through **Planetary Cloud**. It is free and hosts your instance for you, giving you peace of mind.
+The fastest and easiest way to run RPMS is through **Planetary Cloud**. It is free and hosts your instance for you, giving you peace of mind.
 > **[Get started at planetaryapp.cloud](https://planetaryapp.cloud)**
 
 ---
@@ -99,7 +114,7 @@ For full self-hosting instructions, refer to the [official documentation](https:
 
 #### System Requirements
 
-Orbit is designed to run on a small Linux server, but we recommend giving it enough resources for Node.js, dependency installation, and Next.js builds.
+RPMS is designed to run on a small Linux server, but we recommend giving it enough resources for Node.js, dependency installation, and Next.js builds.
 
 | Resource     |                  Minimum |          Recommended |
 | ------------ | -----------------------: | -------------------: |
@@ -111,12 +126,12 @@ Orbit is designed to run on a small Linux server, but we recommend giving it eno
 | **OS**       |                    Linux |                Linux |
 
 > [!WARNING]
-> You cannot use MongoDB, as MongoDB's database interface is NoSQL, and Orbit was programmed to be in SQL-like interface (such as PostgresSQL), and therefore is not compatible with MongoDB.
+> You cannot use MongoDB, as MongoDB's database interface is NoSQL, and RPMS was programmed to be in SQL-like interface (such as PostgresSQL), and therefore is not compatible with MongoDB.
 
 > [!TIP]
-> **An SSD is strongly recommended.** Orbit's dependencies can consume a significant amount of disk space, particularly `node_modules`, and Next.js builds perform a considerable amount of disk I/O. We recommend having at least 20 GB of available storage for a comfortable installation.
+> **An SSD is strongly recommended.** RPMS's dependencies can consume a significant amount of disk space, particularly `node_modules`, and Next.js builds perform a considerable amount of disk I/O. We recommend having at least 20 GB of available storage for a comfortable installation.
 
-The minimum requirements are intended to represent the lowest practical configuration for running Orbit, not a recommended production environment. For production installations, we recommend **4 GB or more of RAM and SSD storage**.
+The minimum requirements are intended to represent the lowest practical configuration for running RPMS, not a recommended production environment. For production installations, we recommend **4 GB or more of RAM and SSD storage**.
 
 ---
 
@@ -154,7 +169,7 @@ The minimum requirements are intended to represent the lowest practical configur
   <tr>
     <td width="50%" valign="middle" align="left">
       <h3>📅 Sessions</h3>
-      <p>Schedule, host, and log sessions without the usual overhead. Session hosts can announce and manage events directly in Orbit, keeping everything in one place and your staff informed.</p>
+      <p>Schedule, host, and log sessions without the usual overhead. Session hosts can announce and manage events directly in RPMS, keeping everything in one place and your staff informed.</p>
     </td>
     <td width="50%" valign="middle">
       <img src="public/presentation/3.png" alt="Sessions" width="100%" />
@@ -171,7 +186,7 @@ The minimum requirements are intended to represent the lowest practical configur
     </td>
     <td width="50%" valign="middle" align="left">
       <h3>📊 Quota Management</h3>
-      <p>Assign activity quotas to staff roles and track progress in real time. Set weekly or monthly requirements and let Orbit handle the monitoring, so nothing slips through the cracks.</p>
+      <p>Assign activity quotas to staff roles and track progress in real time. Set weekly or monthly requirements and let RPMS handle the monitoring, so nothing slips through the cracks.</p>
     </td>
   </tr>
 </table>
@@ -182,7 +197,7 @@ The minimum requirements are intended to represent the lowest practical configur
   <tr>
     <td width="50%" valign="middle" align="left">
       <h3>📄 Documents</h3>
-      <p>Host your group's documentation natively inside Orbit. Write, organise, and publish guides, handbooks, and policies — no external tool required.</p>
+      <p>Host your group's documentation natively inside RPMS. Write, organise, and publish guides, handbooks, and policies — no external tool required.</p>
     </td>
     <td width="50%" valign="middle">
       <img src="public/presentation/5.png" alt="Documents" width="100%" />
@@ -210,7 +225,7 @@ The minimum requirements are intended to represent the lowest practical configur
   <tr>
     <td width="50%" valign="middle" align="left">
       <h3>🔔 Notices</h3>
-      <p>Let staff flag when they'll be away before it becomes a problem. Members submit inactivity notices directly in Orbit, and managers get a clear view of who's available and when.</p>
+      <p>Let staff flag when they'll be away before it becomes a problem. Members submit inactivity notices directly in RPMS, and managers get a clear view of who's available and when.</p>
     </td>
     <td width="50%" valign="middle">
       <img src="public/presentation/7.png" alt="Notices" width="100%" />
@@ -236,7 +251,7 @@ The minimum requirements are intended to represent the lowest practical configur
 
 ## Tech Stack
 
-Orbit is built with a modern, fully TypeScript stack:
+RPMS is built with a modern, fully TypeScript stack:
 
 - **Frontend:** [Next.js](https://nextjs.org), [TailwindCSS](https://tailwindcss.com)
 - **Backend:** [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction), [Prisma ORM](https://www.prisma.io)
@@ -247,13 +262,13 @@ Orbit is built with a modern, fully TypeScript stack:
 
 ## Contributing
 
-View the [contribution guidelines](./CONTRIBUTING.md) for more information on how to contribute to Orbit. Failure to follow these guidelines may result in your pull request being rejected.
+View the [contribution guidelines](./CONTRIBUTING.md) for more information on how to contribute to RPMS. Failure to follow these guidelines may result in your pull request being rejected.
 
 ---
 
 ## License
 
-Orbit is licensed under the [GNU General Public License v3.0](./LICENSE). You are free to use, modify, and distribute this software under the terms of that license.
+RPMS is licensed under the [GNU General Public License v3.0](./LICENSE). You are free to use, modify, and distribute this software under the terms of that license.
 
 ---
 

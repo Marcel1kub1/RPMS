@@ -1,4 +1,4 @@
-import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import {
   PrismaClient,
   role,
@@ -23,8 +23,22 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
+const databaseUrl = process.env.DATABASE_URL
+  ? new URL(process.env.DATABASE_URL)
+  : null;
+
+const adapter = new PrismaMariaDb({
+  host: process.env.DATABASE_HOST || databaseUrl?.hostname || 'db',
+  port: Number(process.env.DATABASE_PORT || databaseUrl?.port || 3306),
+  user: process.env.DATABASE_USER || decodeURIComponent(databaseUrl?.username || 'rpms'),
+  password:
+    process.env.DATABASE_PASSWORD ||
+    decodeURIComponent(databaseUrl?.password || ''),
+  database:
+    process.env.DATABASE_NAME ||
+    databaseUrl?.pathname.replace(/^\/+/, '') ||
+    'rpms',
+  connectionLimit: Number(process.env.DATABASE_CONNECTION_LIMIT || 3),
 });
 
 const prisma =

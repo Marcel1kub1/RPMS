@@ -4,6 +4,7 @@ import prisma from '@/utils/database';
 import { checkSpecificUser } from '@/utils/permissionsManager';
 import { generateSessionTimeMessage } from '@/utils/sessionMessage';
 import { getUsername, getThumbnail } from '@/utils/userinfoEngine';
+import { notifyDiscordWebhook } from '@/utils/discordWebhook';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import * as noblox from 'noblox.js';
 
@@ -120,12 +121,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         await cache.set(rankCacheKey, userRank, 300);
       }
 
-      if (parsedConfig.role && (!userRank || userRank < parsedConfig.role)) {
-        return res.status(200).json({
-          success: true,
-          error: 'User is not the right rank',
-        });
-      }
+      const isStaff = !parsedConfig.role || Boolean(userRank && userRank >= parsedConfig.role);
 
       let username = await cache.get<string>(`roblox:username:${userid}`);
 
@@ -200,7 +196,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
         const sessionMessage = generateSessionTimeMessage(gameName, sessionStartTime);
 
-        await prisma.activitySession.create({
+        const activitySession = await prisma.activitySession.create({
           data: {
             id: crypto.randomUUID(),
             userId: BigInt(userid),
@@ -208,11 +204,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             startTime: sessionStartTime,
             universeId: placeid ? BigInt(placeid) : null,
             sessionMessage,
+            isStaff,
+            serverJobId: typeof req.body.serverJobId === 'string' ? req.body.serverJobId : null,
+            sessionSource: 'roblox_server',
             workspaceGroupId: groupId,
           },
         });
 
         await cache.del(`activity:session:${groupId}:${userid}`);
+        await notifyDiscordWebhook({
+          event: isStaff ? 'staff_shift' : 'session_start',
+          title: isStaff ? 'Staff shift started' : 'Player session started',
+          description: `${username} started a ${isStaff ? 'staff' : 'non-staff'} session.`,
+          fields: [
+            { name: 'Roblox user ID', value: String(userid), inline: true },
+            { name: 'Session ID', value: activitySession.id, inline: true },
+            { name: 'Place ID', value: placeid ? String(placeid) : 'Unknown', inline: true },
+          ],
+        });
+        if (chatLog !== undefined) {
+          await notifyDiscordWebhook({
+            event: 'chat_log',
+            title: 'Roblox chat log received',
+            description: `Chat log recorded for ${username}.`,
+            fields: [
+              { name: 'Roblox user ID', value: String(userid), inline: true },
+              {
+                name: 'Messages',
+                value: JSON.stringify(chatLog).slice(0, 900),
+              },
+            ],
+          });
+        }
 
         return res.status(200).json({
           success: true,
@@ -252,6 +275,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             messages: messagesCount,
             ...(chatLog !== undefined ? { chatLog } : {}),
           },
+        });
+        await notifyDiscordWebhook({
+          event: session.isStaff ? 'staff_shift' : 'session_end',
+          title: session.isStaff ? 'Staff shift ended' : 'Player session ended',
+          description: `Session for ${username} ended.`,
+          fields: [
+            { name: 'Roblox user ID', value: String(userid), inline: true },
+            { name: 'Session ID', value: session.id, inline: true },
+            { name: 'Chat messages', value: String(messagesCount ?? 0), inline: true },
+          ],
         });
 
         await cache.del(`activity:session:${groupId}:${userid}`);
