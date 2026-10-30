@@ -808,11 +808,13 @@ const Home: pageWithLayout<pageProps> = (props) => {
           newStatues.set(session.id, 'Concluded');
         } else {
           let foundStatus = false;
-          for (const e of session.sessionType.statues.sort((a: any, b: any) => {
+          for (const e of (Array.isArray(session.sessionType.statues)
+            ? [...session.sessionType.statues].sort((a: any, b: any) => {
             const object = JSON.parse(JSON.stringify(a));
             const object2 = JSON.parse(JSON.stringify(b));
             return object2.timeAfter - object.timeAfter;
-          })) {
+            })
+            : []) as any[]) {
             const slot = JSON.parse(JSON.stringify(e));
             if (minutesFromStart >= slot.timeAfter) {
               newStatues.set(session.id, slot.name);

@@ -1,6 +1,7 @@
 import { AuthenticatedRequest, withAuth } from '@/lib/withAuth';
 import { fetchworkspace, getConfig, setConfig } from '@/utils/configEngine';
 import prisma from '@/utils/database';
+import { jsonArrayIncludes } from '@/utils/jsonArray';
 import { withPermissionCheck } from '@/utils/permissionsManager';
 import { getUsername, getThumbnail, getDisplayName } from '@/utils/userinfoEngine';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -212,7 +213,7 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
         );
       }).length;
 
-      const allianceVisits = await prisma.allyVisit.count({
+      const allianceVisits = (await prisma.allyVisit.findMany({
         where: {
           ally: {
             workspaceGroupId: workspaceGroupId,
@@ -221,9 +222,11 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
             gte: periodStart,
             lte: periodEnd,
           },
-          OR: [{ hostId: userId }, { participants: { has: userId } }],
         },
-      });
+        select: { hostId: true, participants: true },
+      })).filter(
+        (visit) => visit.hostId === userId || jsonArrayIncludes(visit.participants, userId),
+      ).length;
 
       const wallPosts = await prisma.wallPost.findMany({
         where: {

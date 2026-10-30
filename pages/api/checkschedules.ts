@@ -1,5 +1,6 @@
 import { AuthenticatedRequest, withAuth } from '@/lib/withAuth';
 import prisma from '@/utils/database';
+import { jsonArrayIncludes } from '@/utils/jsonArray';
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 type Data = {
@@ -24,11 +25,8 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
   const regkey = JSON.parse(JSON.stringify(registryconfig.value)).key;
   if (key !== regkey) return res.status(401).json({ success: false, error: 'Invalid key' });
   //find all schedules that have past times today
-  const schedules = await prisma.schedule.findMany({
+  const schedules = (await prisma.schedule.findMany({
     where: {
-      Days: {
-        has: new Date().getUTCDay(),
-      },
       Hour: {
         lte: new Date().getUTCHours(),
       },
@@ -36,7 +34,7 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
         lte: new Date().getUTCMinutes(),
       },
     },
-  });
+  })).filter((schedule) => jsonArrayIncludes(schedule.Days, new Date().getUTCDay()));
 
   for (const schedule of schedules) {
     const date = new Date();

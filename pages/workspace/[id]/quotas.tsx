@@ -2,6 +2,7 @@ import workspace from '@/layouts/workspace';
 import { pageWithLayout } from '@/layoutTypes';
 import { loginState, workspacestate } from '@/state';
 import prisma from '@/utils/database';
+import { jsonArrayIncludes } from '@/utils/jsonArray';
 import { withPermissionCheckSsr } from '@/utils/permissionsManager';
 import randomText from '@/utils/randomText';
 import { Dialog, Transition } from '@headlessui/react';
@@ -584,14 +585,17 @@ export const getServerSideProps = withPermissionCheckSsr(async ({ req, params })
     ? Math.max(0, totalMinutes - totalIdleMinutes)
     : totalMinutes;
 
-  const allianceVisits = await prisma.allyVisit.count({
+  const allianceVisits = (await prisma.allyVisit.findMany({
     where: {
-      OR: [{ hostId: BigInt(userId) }, { participants: { has: BigInt(userId) } }],
       time: {
         gte: startDate,
       },
     },
-  });
+    select: { hostId: true, participants: true },
+  })).filter(
+    (visit) =>
+      visit.hostId === BigInt(userId) || jsonArrayIncludes(visit.participants, userId),
+  ).length;
 
   const userRoleIds = (profileData?.roles || []).map((r: any) => r.id);
   const userDepartmentIds = (profileData?.workspaceMemberships?.[0]?.departmentMembers || []).map(

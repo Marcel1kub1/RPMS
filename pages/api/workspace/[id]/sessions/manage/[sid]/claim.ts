@@ -1,5 +1,6 @@
 import { AuthenticatedRequest, withAuth } from '@/lib/withAuth';
 import prisma, { schedule } from '@/utils/database';
+import { jsonArrayIncludes } from '@/utils/jsonArray';
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiResponse } from 'next';
 type Data = {
@@ -43,12 +44,9 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
   const membership = user?.workspaceMemberships[0];
   const isAdmin = membership?.isAdmin || false;
 
-  const schedule = await prisma.schedule.findFirst({
+  const scheduleRecord = await prisma.schedule.findFirst({
     where: {
       id: sid as string,
-      Days: {
-        has: day.getUTCDay(),
-      },
     },
     include: {
       sessionType: true,
@@ -58,6 +56,10 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
       },
     },
   });
+  const schedule =
+    scheduleRecord && jsonArrayIncludes(scheduleRecord.Days, day.getUTCDay())
+      ? scheduleRecord
+      : null;
 
   const existingSessionType = schedule?.sessions?.[0]?.type?.toLowerCase() || 'other';
   const validTypes = ['shift', 'training', 'event', 'other'];

@@ -1,4 +1,5 @@
 import prisma from '@/utils/database';
+import { jsonArrayIncludes } from '@/utils/jsonArray';
 import { withPermissionCheck } from '@/utils/permissionsManager';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -296,7 +297,7 @@ export default withPermissionCheck(async (req: NextApiRequest, res: NextApiRespo
       const visits = allianceVisits.filter(
         (visit) =>
           String(visit.hostId) === uid ||
-          visit.participants.some((participant) => String(participant) === uid),
+          jsonArrayIncludes(visit.participants, uid),
       ).length;
 
       const progress = assignedQuotas.map((quota) => {

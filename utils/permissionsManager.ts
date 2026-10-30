@@ -12,6 +12,7 @@ import cache from './cache';
 import { getConfig } from './configEngine';
 import { validateCsrf } from './csrf';
 import prisma from './database';
+import { jsonArray } from './jsonArray';
 import { getSessionByToken } from './session';
 import { getThumbnail } from './userinfoEngine';
 
@@ -571,7 +572,9 @@ export async function checkGroupRoles(groupID: number) {
             const rankId = Number(userRank.rankId);
             const matched = await retryNobloxRequest(() => noblox.getRole(groupID, rankId))
               .then((info) =>
-                availableRoles.find((r) => (r.groupRoles ?? []).map(Number).includes(info.id)),
+                availableRoles.find((r) =>
+                  jsonArray(r.groupRoles).map(Number).includes(info.id),
+                ),
               )
               .catch(() => null);
             if (matched) targetRole = matched;
@@ -715,7 +718,7 @@ export async function checkGroupRoles(groupID: number) {
           data: {
             workspaceGroupId: groupID,
             name: groupRole.name,
-            groupRoles: [BigInt(groupRole.id)],
+            groupRoles: [String(groupRole.id)],
             permissions: [],
             position: index,
             isOwnerRole: false,
@@ -943,7 +946,9 @@ export async function checkGroupRoles(groupID: number) {
           continue;
         }
 
-        if (userRole.groupRoles.length === 0) {
+        const configuredGroupRoles = jsonArray(userRole.groupRoles);
+
+        if (configuredGroupRoles.length === 0) {
           if (isManual) continue;
           console.log(
             `[update-group] Removing unconfigured role "${userRole.name}" from ${user.userid}`,
@@ -952,7 +957,7 @@ export async function checkGroupRoles(groupID: number) {
           continue;
         }
 
-        const groupRoleIds = userRole.groupRoles.map((id: any) => Number(id));
+        const groupRoleIds = configuredGroupRoles.map((id: any) => Number(id));
         const qualifies = groupRoleIds.includes(userRankData.robloxRoleId);
 
         if (!qualifies) {
@@ -969,7 +974,9 @@ export async function checkGroupRoles(groupID: number) {
 
           const remainingValid = user.roles.filter(
             (r) =>
-              !r.isOwnerRole && r.groupRoles && r.groupRoles.length > 0 && r.id !== userRole.id,
+              !r.isOwnerRole &&
+              jsonArray(r.groupRoles).length > 0 &&
+              r.id !== userRole.id,
           );
           if (remainingValid.length === 0) {
             console.log(

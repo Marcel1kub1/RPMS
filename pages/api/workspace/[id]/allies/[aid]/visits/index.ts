@@ -86,7 +86,7 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
         allyId: req.query.aid,
         name: name,
         time: new Date(time),
-        participants: participants ? participants.map((p: number) => BigInt(p)) : [],
+        participants: participants ? participants.map((p: number) => String(p)) : [],
       },
     });
 

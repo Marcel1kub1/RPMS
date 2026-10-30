@@ -9,6 +9,7 @@ import Workspace from '@/layouts/workspace';
 import type { pageWithLayout } from '@/layoutTypes';
 import { loginState } from '@/state';
 import prisma from '@/utils/database';
+import { jsonArray } from '@/utils/jsonArray';
 import { withPermissionCheckSsr } from '@/utils/permissionsManager';
 import { getSessionByToken } from '@/utils/session';
 import { getUsername, getDisplayName, getThumbnail } from '@/utils/userinfoEngine';
@@ -135,12 +136,12 @@ export const getServerSideProps: GetServerSideProps = withPermissionCheckSsr(
           ...u,
           roles: u.roles.map((r: any) => ({
             ...r,
-            groupRoles: r.groupRoles.map((id: any) => id.toString()),
+            groupRoles: jsonArray(r.groupRoles).map((id: any) => id.toString()),
           })),
         })),
         roles: roles.map((r) => ({
           ...r,
-          groupRoles: r.groupRoles.map((id) => id.toString()),
+          groupRoles: jsonArray(r.groupRoles).map((id) => id.toString()),
         })),
         departments: departments.map((d) => ({
           ...d,

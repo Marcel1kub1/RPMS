@@ -13,6 +13,7 @@ import workspace from '@/layouts/workspace';
 import { pageWithLayout } from '@/layoutTypes';
 import { loginState } from '@/state';
 import prisma from '@/utils/database';
+import { jsonArrayIncludes } from '@/utils/jsonArray';
 import { withPermissionCheckSsr } from '@/utils/permissionsManager';
 import { getDisplayName, getUsername, getThumbnail } from '@/utils/userinfoEngine';
 import { Tab } from '@headlessui/react';
@@ -442,18 +443,19 @@ export const getServerSideProps = withPermissionCheckSsr(async ({ query, req }) 
     return !isCoHost && !ownedSessionIds.has(participation.sessionid);
   }).length;
 
-  const allianceVisits = await prisma.allyVisit.count({
+  const allianceVisits = (await prisma.allyVisit.findMany({
     where: {
-      OR: [
-        { hostId: BigInt(query?.uid as string) },
-        { participants: { has: BigInt(query?.uid as string) } },
-      ],
       time: {
         gte: startDate,
         lte: currentDate,
       },
     },
-  });
+    select: { hostId: true, participants: true },
+  })).filter(
+    (visit) =>
+      visit.hostId === BigInt(query?.uid as string) ||
+      jsonArrayIncludes(visit.participants, query?.uid as string),
+  ).length;
 
   const user = await prisma.user.findUnique({
     where: { userid: BigInt(query.uid as string) },

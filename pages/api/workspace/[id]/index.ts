@@ -5,6 +5,7 @@ import {
 } from '@/utils/allianceStrikesConfig';
 import { getConfig } from '@/utils/configEngine';
 import prisma, { role } from '@/utils/database';
+import { jsonArray } from '@/utils/jsonArray';
 import { withPermissionCheck } from '@/utils/permissionsManager';
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -196,7 +197,7 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
       groupDarkTheme: darkThemeConfig,
       roles: workspace.roles.map((r) => ({
         ...r,
-        groupRoles: r.groupRoles.map((id) => id.toString()),
+        groupRoles: jsonArray(r.groupRoles).map((id) => id.toString()),
       })),
       yourRole: user.roles[0].id,
       lastSynced: workspace.lastSynced,

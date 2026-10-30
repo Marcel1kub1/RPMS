@@ -124,7 +124,9 @@ export const getServerSideProps = withPermissionCheckSsr(async ({ req, res, para
       hostUsername: await getUsername(visit.hostId),
       hostThumbnail: getThumbnail(visit.hostId),
       time: new Date(visit.time).toISOString(),
-      participants: visit.participants ? visit.participants.map((p: bigint) => Number(p)) : [],
+      participants: Array.isArray(visit.participants)
+        ? visit.participants.map((p: string | number) => Number(p))
+        : [],
     })),
   );
 

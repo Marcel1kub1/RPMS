@@ -102,7 +102,7 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
       };
 
       if (req.body.participants !== undefined) {
-        updateData.participants = req.body.participants.map((p: number) => BigInt(p));
+        updateData.participants = req.body.participants.map((p: number) => String(p));
       }
 
       // @ts-ignore

@@ -1,5 +1,6 @@
 import { getConfig } from '@/utils/configEngine';
 import prisma from '@/utils/database';
+import { jsonArrayIncludes } from '@/utils/jsonArray';
 import { withPermissionCheck } from '@/utils/permissionsManager';
 import { getThumbnail } from '@/utils/userinfoEngine';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -256,10 +257,6 @@ export default withPermissionCheck(async (req: NextApiRequest, res: NextApiRespo
             gte: startDate,
             lte: currentDate,
           },
-          OR: [
-            { hostId: { in: userIds } },
-            { participants: { hasSome: userIds.map((id) => id.toString()) } },
-          ],
         },
         select: {
           hostId: true,
@@ -277,6 +274,11 @@ export default withPermissionCheck(async (req: NextApiRequest, res: NextApiRespo
         },
       }),
     ]);
+    const filteredAllyVisits = allAllyVisits.filter(
+      (visit) =>
+        userIds.includes(visit.hostId) ||
+        userIds.some((userId) => jsonArrayIncludes(visit.participants, userId)),
+    );
 
     const adjustmentsByUser = new Map<string, any[]>();
     allAdjustments.forEach((adj) => {
@@ -387,8 +389,10 @@ export default withPermissionCheck(async (req: NextApiRequest, res: NextApiRespo
       }
 
       const userIdStr = userId.toString();
-      const allianceVisits = allAllyVisits.filter(
-        (visit) => visit.hostId.toString() === userIdStr || visit.participants.includes(userIdStr),
+      const allianceVisits = filteredAllyVisits.filter(
+        (visit) =>
+          visit.hostId.toString() === userIdStr ||
+          jsonArrayIncludes(visit.participants, userIdStr),
       ).length;
 
       const currentWallPosts = wallPostsByUser.get(userKey) || [];

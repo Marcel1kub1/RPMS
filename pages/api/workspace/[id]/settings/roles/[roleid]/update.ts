@@ -1,6 +1,7 @@
 import cache from '@/utils/cache';
 import { fetchworkspace } from '@/utils/configEngine';
 import prisma from '@/utils/database';
+import { jsonArrayIncludes } from '@/utils/jsonArray';
 import { logAudit } from '@/utils/logs';
 import { withPermissionCheck } from '@/utils/permissionsManager';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -65,17 +66,16 @@ export async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
       });
     }
 
-    const conflictingRoles = await prisma.role.findMany({
+    const conflictingRoles = (await prisma.role.findMany({
       where: {
         workspaceGroupId: workspaceId,
         id: {
           not: roleId,
         },
-        groupRoles: {
-          hasSome: groupRoles.map((id: string | number) => BigInt(id)),
-        },
       },
-    });
+    })).filter((existingRole) =>
+      groupRoles.some((id: string | number) => jsonArrayIncludes(existingRole.groupRoles, id)),
+    );
 
     if (conflictingRoles.length > 0) {
       return res.status(400).json({

@@ -222,7 +222,7 @@ model role {
   isOwnerRole      Boolean?      @default(false)
   workspaceGroupId Int
   name             String
-  groupRoles       BigInt[]
+  groupRoles       Json
   position         Int           @default(0)
   color            String?
   quotaRoles       QuotaRole[]
@@ -323,8 +323,8 @@ model SessionType {
   gameId             BigInt?
   allowUnscheduled   Boolean
   workspaceGroupId   Int
-  statues            Json[]
-  slots              Json[]
+  statues            Json
+  slots              Json
   description        String?
   sessions           Session[]
   workspace          workspace    @relation(fields: [workspaceGroupId], references: [groupId])
@@ -335,7 +335,7 @@ model SessionType {
 
 model schedule {
   id            String      @id @unique @default(uuid()) @db.VarChar(36)
-  Days          Int[]
+  Days          Json
   Hour          Int
   Minute        Int
   sessionTypeId String      @db.VarChar(36)
@@ -606,7 +606,7 @@ model allyVisit {
   hostId       BigInt
   time         DateTime
   name         String
-  participants BigInt[]
+  participants Json
   ally         Ally     @relation(fields: [allyId], references: [id])
   host         user     @relation(fields: [hostId], references: [userid])
 }
