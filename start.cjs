@@ -3,7 +3,7 @@ const { spawn } = require('node:child_process');
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 const environment = {
   ...process.env,
-  HOSTNAME: process.env.HOSTNAME || '0.0.0.0',
+  HOSTNAME: '0.0.0.0',
   PORT: process.env.PORT || '9050',
 };
 

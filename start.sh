@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-export HOSTNAME="${HOSTNAME:-0.0.0.0}"
+export HOSTNAME="0.0.0.0"
 export PORT="${PORT:-9050}"
 
 if [ ! -x node_modules/.bin/next ]; then
