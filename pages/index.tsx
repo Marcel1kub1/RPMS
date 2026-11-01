@@ -427,7 +427,7 @@ const Home: NextPage = () => {
 
     try {
       await axios.delete(
-        `/api/workspace/${workspace.groupId}/settings/general/deletews`,
+        `/api/workspace/${encodeURIComponent(String(workspace.groupId))}/settings/general/deletews`,
       );
 
       setInstanceWorkspaces((current) =>
@@ -444,7 +444,10 @@ const Home: NextPage = () => {
 
       toast.success('Workspace deleted.');
     } catch (error) {
-      toast.error('Failed to delete workspace.');
+      const message = axios.isAxiosError(error)
+        ? error.response?.data?.error
+        : undefined;
+      toast.error(message || 'Failed to delete workspace.');
       console.error('Failed to delete workspace:', error);
     } finally {
       setDeletingWorkspaceId(null);

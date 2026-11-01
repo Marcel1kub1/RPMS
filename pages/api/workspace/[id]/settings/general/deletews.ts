@@ -1,8 +1,7 @@
 import { AuthenticatedRequest, withInstanceAuth } from '@/lib/withAuth';
 import { validateCsrf } from '@/utils/csrf';
 import prisma from '@/utils/database';
-import { withPermissionCheck } from '@/utils/permissionsManager';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiResponse } from 'next';
 
 type Data = {
   success: boolean;
@@ -23,11 +22,12 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
   }
 
   try {
-    const workspaceId = parseInt(req.query.id as string);
+    const rawWorkspaceId = Array.isArray(req.query.id) ? req.query.id[0] : req.query.id;
+    const workspaceId = Number(rawWorkspaceId);
     const userId = (req as any).auth?.userId;
 
     if (!userId) return res.status(401).json({ success: false, error: 'Not logged in' });
-    if (!workspaceId)
+    if (!rawWorkspaceId || !Number.isSafeInteger(workspaceId) || workspaceId <= 0)
       return res.status(400).json({ success: false, error: 'No workspace id provided' });
 
     const owner = await prisma.user.findUnique({
@@ -44,7 +44,7 @@ export async function handler(req: AuthenticatedRequest, res: NextApiResponse<Da
       },
     });
 
-    if (!owner?.isOwner || !membership?.isAdmin) {
+    if (!owner?.isOwner && !membership?.isAdmin) {
       return res.status(403).json({
         success: false,
         error: 'Only instance owners or workspace admins can delete a workspace',
