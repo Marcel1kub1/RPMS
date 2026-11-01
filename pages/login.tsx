@@ -447,6 +447,11 @@ const Login: NextPage = () => {
         <div className='relative z-10 flex min-h-screen flex-col lg:flex-row'>
           <div className='flex flex-col justify-center px-6 pb-4 pt-16 sm:px-10 lg:w-[42%] lg:px-16 lg:py-16 xl:w-[38%]'>
             <div className='max-w-md'>
+              <img
+                src='/rpms-logo.svg'
+                alt='RPMS - Roleplay Management System'
+                className='mb-8 h-auto w-56'
+              />
               <h1 className='text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl'>
                 Welcome to <span className='text-primary'>RPMS</span>
               </h1>
@@ -553,13 +558,12 @@ const Login: NextPage = () => {
                             </AuthSubmitButton>
                           </div>
 
-                          {(isRobloxOAuth || isDiscordOAuth) &&
-                            !effectiveOAuthOnly && (
-                              <>
-                                {divider}
-                                <OAuthButtons />
-                              </>
-                            )}
+                          {(isRobloxOAuth || isDiscordOAuth) && !effectiveOAuthOnly && (
+                            <>
+                              {divider}
+                              <OAuthButtons />
+                            </>
+                          )}
 
                           {effectiveOAuthOnly && showTraditionalLogin && (
                             <div className='mt-4 text-center'>

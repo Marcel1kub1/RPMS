@@ -61,27 +61,27 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse<Data>) {
       subtitle: `Update: v${packageinfo.version} is now live!`,
       sections: [
         {
-          title: '📚 Documentation rework',
+          title: 'Documentation rework',
           content:
             'We’ve completely reworked our documentation. Everything is clearer, faster, and easier to navigate. Check it out at https://docs.planetaryapp.cloud/',
         },
         {
-          title: '🔧 Backend improvements',
+          title: 'Backend improvements',
           content:
             'We’ve pushed a wave of backend fixes and stability improvements. Things should feel smoother, faster, and more reliable overall ✨',
         },
         {
-          title: '👤 Your profile, your control',
+          title: 'Your profile, your control',
           content:
             'You can now view and edit your own profile — including birthday, timezone, and more personal settings. It’s your space, make it yours.',
         },
         {
-          title: '🎨 UI rework',
+          title: 'UI rework',
           content:
             'We’ve reworked large parts of the UI with a cleaner, more modern feel. Go explore it — we think you’ll enjoy what the RPMS Team has been cooking up 👀',
         },
         {
-          title: '🧑‍💻 User profile system overhaul',
+          title: 'User profile system overhaul',
           content:
             'User profiles have been fully migrated to our new internal user API. This makes everything more stable and sets the foundation for future features.',
         },

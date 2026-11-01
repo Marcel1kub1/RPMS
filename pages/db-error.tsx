@@ -13,6 +13,11 @@ export default function DatabaseErrorPage() {
 
   return (
     <div className='flex h-screen flex-col items-center justify-center bg-white dark:bg-zinc-900 text-center px-4'>
+      <img
+        src='/rpms-logo.svg'
+        alt='RPMS - Roleplay Management System'
+        className='mb-8 h-auto w-56'
+      />
       <div className='w-32 h-32 rounded-full bg-red-100 dark:bg-red-800/20 flex items-center justify-center mx-auto mb-4 border border-red-500 dark:border-red-4000'>
         <IconDatabaseExclamation
           className='w-16 h-16 text-red-600 dark:text-red-500'

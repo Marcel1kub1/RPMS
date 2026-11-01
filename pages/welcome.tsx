@@ -196,8 +196,13 @@ const Login: NextPage = () => {
   return (
     <div className={`min-h-screen bg-no-repeat bg-cover bg-center flex flex-col bg-orbit`}>
       <div className='hidden sm:block absolute top-4 left-4 pointer-events-none'>
+        <img
+          src='/rpms-logo.svg'
+          alt='RPMS - Roleplay Management System'
+          className='mb-5 h-auto w-56'
+        />
         <p className='text-white sm:text-3xl md:text-5xl font-extrabold leading-tight'>
-          👋 Welcome <br /> to <span style={{ color: selectedColor }}>RPMS</span>
+          Welcome <br /> to <span style={{ color: selectedColor }}>RPMS</span>
         </p>
       </div>
 

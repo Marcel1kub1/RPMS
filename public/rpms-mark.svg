@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">RPMS mark</title>
+  <desc id="desc">A shield mark for RPMS, the Roleplay Management System</desc>
+  <defs>
+    <linearGradient id="mark-gradient" x1="24" y1="18" x2="232" y2="238" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+    <filter id="mark-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#0f172a" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <path filter="url(#mark-shadow)" d="M128 10 232 48v78c0 60-43 96-104 120C67 222 24 186 24 126V48z" fill="url(#mark-gradient)"/>
+  <path d="M128 39 202 66v59c0 42-27 69-74 89-47-20-74-47-74-89V66z" fill="#0f172a" fill-opacity=".72"/>
+  <path d="m88 124 25 25 55-59 17 17-72 76-42-42z" fill="#f8fafc"/>
+</svg>

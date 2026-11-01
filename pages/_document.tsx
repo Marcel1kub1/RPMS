@@ -25,7 +25,12 @@ export default function Document() {
         />
         <link
           rel='apple-touch-icon'
-          href='/favicon.png'
+          href='/rpms-mark.svg'
+        />
+        <link
+          rel='icon'
+          href='/rpms-mark.svg'
+          type='image/svg+xml'
         />
 
         <meta

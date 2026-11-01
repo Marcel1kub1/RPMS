@@ -55,6 +55,11 @@ export default function LoadingScreen({ done }: { done: boolean }) {
 
   return (
     <div className='flex flex-col items-center justify-center h-screen dark:bg-zinc-900 bg-white gap-6'>
+      <img
+        src='/rpms-mark.svg'
+        alt='RPMS - Roleplay Management System'
+        className={`h-40 w-40 ${!done ? 'animate-pulse' : ''}`}
+      />
       <svg
         viewBox='0 0 1784 1784'
         xmlns='http://www.w3.org/2000/svg'
@@ -63,7 +68,7 @@ export default function LoadingScreen({ done }: { done: boolean }) {
           transition: 'color 1.2s ease',
           color: done ? `rgb(var(--group-theme, 236, 72, 153))` : 'rgb(156 163 175 / 0.7)',
         }}
-        className={`w-40 h-40 ${!done ? 'animate-pulse' : ''}`}
+        className='hidden'
       >
         <g clipPath='url(#clip0)'>
           <path d='M845.333 0.799618C638 12.6663 446.933 92.133 294 230C263.6 257.333 231.333 290.533 236.666 288.933C240.933 287.6 301.6 281.6 335.333 279.333C404.533 274.533 503.6 274.8 569.333 280C772 296 950.8 350.933 1110 446L1132.67 459.466L1145.33 456.533C1152.27 454.8 1205.73 442 1264 428C1322.27 414 1406.4 393.866 1450.8 383.333C1495.33 372.666 1537.87 361.866 1545.47 359.2C1561.33 353.733 1590.4 341.466 1591.33 340C1593.47 336.533 1537.07 273.866 1504 242.933C1419.6 164.266 1328.67 106 1225.33 64.2663C1143.07 31.1996 1064.13 12.133 971.466 3.19962C951.066 1.19962 866.133 -0.400382 845.333 0.799618Z' />

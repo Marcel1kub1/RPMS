@@ -21,6 +21,11 @@ export default function Error() {
           transition={{ duration: 0.45 }}
           className='max-w-4xl w-full bg-zinc-900/60 backdrop-blur-md rounded-2xl p-8 sm:p-12 text-center shadow-2xl border border-zinc-800'
         >
+          <img
+            src='/rpms-logo.svg'
+            alt='RPMS - Roleplay Management System'
+            className='mx-auto mb-8 h-auto w-56'
+          />
           <div className='flex flex-col sm:flex-row items-center gap-8'>
             <div className='flex-shrink-0'>
               <motion.div

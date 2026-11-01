@@ -3,7 +3,7 @@
 
   # RPMS
 
-  **Roblox Player Management System**
+  **Roleplay Management System**
 
   Open-source staff, session, moderation, and activity management for Roblox communities.
 

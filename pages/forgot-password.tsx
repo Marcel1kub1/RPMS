@@ -143,6 +143,11 @@ const ForgotPassword: NextPage = () => {
 
         <div className='relative z-10 flex flex-col justify-center px-8 md:px-12 lg:px-16 py-12 md:py-0 md:w-[42%] lg:w-[38%]'>
           <div className='max-w-md'>
+            <img
+              src='/rpms-logo.svg'
+              alt='RPMS - Roleplay Management System'
+              className='mb-8 h-auto w-56'
+            />
             <span className='inline-flex items-center gap-2 text-zinc-400 text-sm font-medium tracking-wide uppercase mb-6'>
               <span className='w-8 h-px bg-primary rounded-full' />
               Account
