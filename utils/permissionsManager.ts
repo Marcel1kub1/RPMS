@@ -778,12 +778,12 @@ export async function checkGroupRoles(groupID: number) {
 
     for (const [userId, { robloxRoleId, username }] of userRoleMap.entries()) {
       try {
-        const workspaceRole = rs.find((r) =>
+        const workspaceRole = (rs as any[]).find((r) =>
           (r.groupRoles ?? []).map(Number).includes(robloxRoleId),
         );
         if (!workspaceRole || workspaceRole.isOwnerRole) continue;
 
-        const userInDb = usersInDbIndex.get(userId);
+        const userInDb = usersInDbIndex.get(userId) as any;
         const hasRole = userInDb?.roles.some((r) => r.id === workspaceRole.id);
 
         if (hasRole) {

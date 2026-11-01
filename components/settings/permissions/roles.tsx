@@ -25,6 +25,11 @@ type Props = {
   grouproles: Role[];
 };
 
+type ManagedRole = Omit<role, 'permissions' | 'groupRoles'> & {
+  permissions: string[];
+  groupRoles: string[];
+};
+
 const SortableRole = ({ role, children }: { role: role; children: React.ReactNode }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: role.id,
@@ -112,7 +117,8 @@ const AutoSaveContent = ({
   return <>{children({ open })}</>;
 };
 
-const RolesManager: FC<Props> = ({ roles, setRoles, grouproles }) => {
+const RolesManager: FC<Props> = ({ roles: rawRoles, setRoles, grouproles }) => {
+  const roles = rawRoles as ManagedRole[];
   const [syncModalOpen, setSyncModalOpen] = React.useState(false);
   const [syncing, setSyncing] = React.useState(false);
   const [workspace] = useRecoilState(workspacestate);

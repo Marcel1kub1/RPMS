@@ -12,7 +12,7 @@ export async function validateApiKey(apiKey: string, workspaceId: string | numbe
 
   const cacheKey = `apikey:${apiKey}`;
 
-  const key = await cache.swr(
+  const key = await cache.swr<any>(
     cacheKey,
     () =>
       prisma.apiKey.findUnique({

@@ -5,7 +5,7 @@ import { NextApiResponse } from 'next';
 export async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
   try {
     if (req.method === 'GET') {
-      const sessions = await listActiveSessions(req.auth.userId);
+      const sessions = (await listActiveSessions(req.auth.userId)) as any[];
       return res.status(200).json({
         sessions: sessions.map((s) => ({
           id: s.id,

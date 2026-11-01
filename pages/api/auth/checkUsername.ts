@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     let userid = await cache.get<number>(`roblox:id:${usernameKey}`);
 
     if (!userid) {
-      userid = (await noblox.getIdFromUsername(username).catch(() => null)) as number | undefined;
+      userid = (await noblox.getIdFromUsername(username).catch(() => null)) as number | null;
 
       if (!userid) {
         return res.status(404).json({

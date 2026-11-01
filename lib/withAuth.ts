@@ -138,7 +138,7 @@ export function withKey(
       if (auth.startsWith('Bearer ')) {
         const apiKey = auth.replace('Bearer ', '');
 
-        const key = await validateApiKey(apiKey, workspaceId ?? 0);
+        const key = (await validateApiKey(apiKey, workspaceId ?? 0)) as any;
 
         if (key) {
           if (id && key.workspaceGroupId !== workspaceId) {

@@ -10,7 +10,7 @@ function cacheKey(groupid: number, key: string) {
 
 /** @returns {Promise<object>} */
 
-export async function getConfig(key: string, groupid: number) {
+export async function getConfig(key: string, groupid: number): Promise<any> {
   return cache.swr(
     cacheKey(groupid, key),
     async () => {
@@ -30,7 +30,7 @@ export async function getConfig(key: string, groupid: number) {
   );
 }
 
-export async function fetchworkspace(groupid: number) {
+export async function fetchworkspace(groupid: number): Promise<any> {
   return cache.swr(
     `workspace:${groupid}`,
     () =>

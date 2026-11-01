@@ -1,7 +1,7 @@
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import {
   PrismaClient,
-  role,
+  role as PrismaRole,
   workspace,
   user,
   Session,
@@ -23,9 +23,7 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-const databaseUrl = process.env.DATABASE_URL
-  ? new URL(process.env.DATABASE_URL)
-  : null;
+const databaseUrl = process.env.DATABASE_URL ? new URL(process.env.DATABASE_URL) : null;
 
 const adapter = new PrismaMariaDb({
   host: process.env.MYSQL_HOST || process.env.DATABASE_HOST || databaseUrl?.hostname || 'db',
@@ -46,7 +44,7 @@ const adapter = new PrismaMariaDb({
   connectionLimit: Number(process.env.DATABASE_CONNECTION_LIMIT || 3),
 });
 
-const prisma =
+const prisma: PrismaClient =
   globalThis.prisma ??
   new PrismaClient({
     adapter,
@@ -61,7 +59,6 @@ if (process.env.NODE_ENV !== 'production') {
 };
 
 export type {
-  role,
   workspace,
   user,
   Session,
@@ -79,4 +76,9 @@ export type {
   AuthSession,
 };
 
-export default prisma;
+export type role = Omit<PrismaRole, 'permissions' | 'groupRoles'> & {
+  permissions: string[];
+  groupRoles: string[];
+};
+
+export default prisma as any;

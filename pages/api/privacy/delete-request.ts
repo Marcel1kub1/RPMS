@@ -44,7 +44,7 @@ export default async function handler(
     await tx.googleUser.deleteMany({ where: { robloxUserId: session.userId } });
     await tx.activitySession.updateMany({
       where: { userId: session.userId },
-      data: { chatLog: null },
+      data: { chatLog: { set: null } },
     });
     await tx.user.update({
       where: { userid: session.userId },

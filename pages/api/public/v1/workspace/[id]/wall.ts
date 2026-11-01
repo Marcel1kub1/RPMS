@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!workspaceId) return res.status(400).json({ success: false, error: 'Missing workspace ID' });
 
   try {
-    const key = await validateApiKey(apiKey, workspaceId);
+    const key = (await validateApiKey(apiKey, workspaceId)) as any;
     if (!key) return res.status(401).json({ success: false, error: 'Invalid API key' });
 
     // GET: Fetch wall posts
@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const formattedPosts = posts.map((post) => ({
         id: post.id,
         content: post.content,
-        image: post.image,
+        image: post.mediaId ? `/api/media/${post.mediaId}` : null,
         createdAt: post.createdAt,
         updatedAt: post.updatedAt,
         author: {
@@ -71,7 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const post = await prisma.wallPost.create({
         data: {
           content,
-          image,
+          mediaId: image || null,
           workspaceGroupId: workspaceId,
           authorId: BigInt(key.createdById),
         },
@@ -92,7 +92,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         post: {
           id: post.id,
           content: post.content,
-          image: post.image,
+          image: post.mediaId ? `/api/media/${post.mediaId}` : null,
           createdAt: post.createdAt,
           updatedAt: post.updatedAt,
           author: {

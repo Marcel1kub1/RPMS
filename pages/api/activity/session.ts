@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         config = await prisma.config.findFirst({
           where: {
             value: {
-              path: ['key'],
+              path: 'key',
               equals: authorization,
             },
           },
@@ -222,6 +222,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             { name: 'Place ID', value: placeid ? String(placeid) : 'Unknown', inline: true },
           ],
         });
+        const chatLog = req.body.chatLog;
         if (chatLog !== undefined) {
           await notifyDiscordWebhook({
             event: 'chat_log',

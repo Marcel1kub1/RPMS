@@ -172,7 +172,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       })),
     }));
 
-    const sessionsByDate = formattedSessions.reduce<Record<string, typeof formattedSessions>>(
+    const sessionsByDate = formattedSessions.reduce(
       (acc, session) => {
         const key = session.date.toISOString().split('T')[0];
         (acc[key] ??= []).push(session);

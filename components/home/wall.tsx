@@ -54,9 +54,9 @@ const Wall: React.FC = () => {
               <div className='prose prose-sm prose-zinc dark:prose-invert mt-1 max-w-none line-clamp-3 [&_p]:my-0'>
                 <ReactMarkdown rehypePlugins={[rehypeSanitize]}>{post.content}</ReactMarkdown>
               </div>
-              {post.image && (
+              {post.mediaId && (
                 <img
-                  src={post.image}
+                  src={`/api/media/${post.mediaId}`}
                   alt=''
                   className='mt-2 max-h-36 w-full rounded-md object-cover'
                 />

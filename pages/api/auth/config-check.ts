@@ -30,7 +30,7 @@ export default async function handler(
   }
 
   try {
-    const cached = await cache.get<ConfigCheckResponse>(CACHE_KEY);
+    const cached = (await cache.get(CACHE_KEY)) as ConfigCheckResponse | null;
 
     if (cached) {
       return res.status(200).json(cached);
@@ -65,7 +65,7 @@ export default async function handler(
         },
       });
 
-      configMap = configs.reduce<Record<string, unknown>>((acc, config) => {
+      configMap = configs.reduce((acc: Record<string, unknown>, config: any) => {
         acc[config.key] = typeof config.value === 'string' ? config.value.trim() : config.value;
 
         return acc;

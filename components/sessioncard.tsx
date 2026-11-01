@@ -846,7 +846,7 @@ const AutocompleteInput: React.FC<{
       );
     }
 
-    let suggestions = [];
+    let suggestions: any[] = [];
     if (assignedUserId && currentValue.trim() !== '') {
       const assignedUser = availableUsers.find((user) => user.userid.toString() === assignedUserId);
       if (assignedUser) {

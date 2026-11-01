@@ -54,7 +54,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     search ?? 'none',
   ].join(':');
 
-  const cached = await cache.get(cacheKey);
+  const cached = (await cache.get(cacheKey)) as Data | null;
 
   if (cached) {
     return res.status(200).json(cached);
