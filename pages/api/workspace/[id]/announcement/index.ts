@@ -57,7 +57,7 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse<Data>) {
     });
 
     const defaultAnnouncement = {
-      title: 'Planetary',
+      title: 'RPMS - Roleplay Management System',
       subtitle: `Update: v${packageinfo.version} is now live!`,
       sections: [
         {
@@ -78,7 +78,7 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse<Data>) {
         {
           title: '🎨 UI rework',
           content:
-            'We’ve reworked large parts of the UI with a cleaner, more modern feel. Go explore it — we think you’ll enjoy what the Planetary Team has been cooking up 👀',
+            'We’ve reworked large parts of the UI with a cleaner, more modern feel. Go explore it — we think you’ll enjoy what the RPMS Team has been cooking up 👀',
         },
         {
           title: '🧑‍💻 User profile system overhaul',

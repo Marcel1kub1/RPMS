@@ -28,7 +28,5 @@ function run(command, args, onSuccess) {
 }
 
 run(npm, ['run', 'prisma:push'], () => {
-  run(npm, ['run', 'prisma:generate'], () => {
-    run(npm, ['run', 'start'], () => {});
-  });
+  run(npm, ['run', 'start'], () => {});
 });

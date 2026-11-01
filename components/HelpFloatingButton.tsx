@@ -257,11 +257,11 @@ export function HelpProvider({ children }: { children: React.ReactNode }) {
                       id='orbit-license-title'
                       className='text-sm font-semibold text-zinc-900 dark:text-white'
                     >
-                      Orbit
+                      RPMS - Roleplay Management System
                     </h3>
 
                     <p className='mt-1 text-xs text-zinc-500 dark:text-zinc-400'>
-                      © 2025–2026 Planetary
+                      © 2025–2026 RPMS
                     </p>
                   </div>
 

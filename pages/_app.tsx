@@ -97,7 +97,7 @@ function ConsoleBanner() {
       danger: ['font-size: 13px', 'font-weight: 800', 'color: #ff4d6d'].join(';'),
     };
 
-    console.info('%cRPMS %c— The All In One Staff Management Solution', styles.logo, styles.title);
+    console.info('%cRPMS %c— Roleplay Management System', styles.logo, styles.title);
 
     console.info('%c\n%s', styles.subtitle, 'Staff management, without the headache.');
 
@@ -164,7 +164,7 @@ function RPMS({ Component, pageProps }: AppPropsWithLayout) {
           />
           <meta
             name='description'
-            content='RPMS — The all-in-one staff management solution.'
+            content='RPMS — Roleplay Management System.'
           />
         </Head>
 

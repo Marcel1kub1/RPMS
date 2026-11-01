@@ -165,9 +165,9 @@ const Topbar: NextPage = () => {
           <div className='flex justify-between items-center h-16'>
             <Link href='/'>
               <img
-                src='/planetary.svg'
+                src='/rpms-logo.svg'
                 className='h-8 w-32'
-                alt='Planetary'
+                alt='RPMS - Roleplay Management System'
               />
             </Link>
 

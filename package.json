@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "cross-env NODE_OPTIONS=\"--max-old-space-size=4096\" next build --webpack",
-    "start": "next dev --webpack -H 0.0.0.0 -p ${PORT:-9050}",
+    "compile": "pnpm run prisma:generate && pnpm run build",
+    "prestart": "pnpm run compile",
+    "start": "next start -H 0.0.0.0 -p ${PORT:-9050}",
     "typecheck": "tsc --noEmit",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",

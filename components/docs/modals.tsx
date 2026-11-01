@@ -108,7 +108,7 @@ export function ExternalLinkModal({
               External link
             </Dialog.Title>
             <p className='mt-1 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400'>
-              This link was added by a workspace member and is not verified by Planetary. Proceed at
+              This link was added by a workspace member and is not verified by RPMS. Proceed at
               your own risk.
             </p>
           </div>
